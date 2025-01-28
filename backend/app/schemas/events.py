@@ -8,9 +8,12 @@ class EventsBase(BaseModel):
     ticket_status:str | None = None #あとでenumに修正
     expense:int | None = None
     
-
+#GETのレスポンス
 class Events(EventsBase):
     id:int 
 
 class EventsCreate(EventsBase):
     pass
+
+class Config:
+    orm_mode = True
