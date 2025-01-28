@@ -1,10 +1,14 @@
+from typing import List
 from fastapi import APIRouter
+
+import schemas.events as events_schema
 
 router = APIRouter()
 
-@router.get('/events')
+#sampleデータの登録
+@router.get('/events', response_model=List[events_schema.Events])
 async def list_events():
-    pass
+    return [events_schema.Events(id=1, name="rock in japan", venue="ひたちなか", date="2024-09-23")]
 
 @router.post('/events')
 async def create_events():
