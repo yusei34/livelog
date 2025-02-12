@@ -10,6 +10,8 @@ python = "^3.12"
 fastapi = {extras = ["standard"], version = "^0.115.7"}
 pydantic = "^2.10.6"
 uvicorn = {extras = ["standard"], version = "^0.34.0"}
+sqlmodel = "^0.0.22"
+email-validator = "^2.2.0"
 
 
 [build-system]
