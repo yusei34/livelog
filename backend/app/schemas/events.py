@@ -2,7 +2,7 @@ import uuid
 from datetime import date
 from enum import Enum
 
-from sqlmodel import Field,SQLModel
+from sqlmodel import Field,SQLModel,Relationship
 
 class TicketStatus(str,Enum):
     ON_APPLICATION = '申込中'
@@ -30,7 +30,10 @@ class EventsUpdate(EventBase):
     ticket_status: TicketStatus | None
     
 # Eventsテーブルのモデル定義
-class Event(EventBase, table=True):
+class Events(EventBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    
+    event_name: str = Field(nullable=False, max_length=200)
+    venue: str = Field(nullable=False, max_length=200)
+    expense_id : uuid.UUID | None = Field(foreign_key="expenses.id")
+    expenses: Expenses | None = Relationship(back_populates="events")
     
