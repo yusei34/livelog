@@ -11,10 +11,10 @@ class TicketStatus(str,Enum):
 
 # EventsテーブルおよびCRUD操作用のベーススキーマ
 class EventsBase(SQLModel):
-    event_name:str = Field(description='ライブイベントのタイトル',examples=['ARABAKI ROCK FEST'])
-    venue:str = Field(description='ライブイベントの会場名', examples=['国営みちのく杜の湖畔公園'])
-    date:date
-    ticket_status:TicketStatus | None = Field(default=None)
+    event_name: str = Field(description='ライブイベントのタイトル',examples=['ARABAKI ROCK FEST'])
+    venue: str = Field(description='ライブイベントの会場名', examples=['国営みちのく杜の湖畔公園'])
+    date: date
+    ticket_status: TicketStatus | None = Field(default=None)
 
 # GET イベント取得(出力用)
 class EventsPublic(EventsBase):
@@ -26,9 +26,9 @@ class EventsCreate(EventsBase):
 
 # PUT ライブイベント更新(修正)
 class EventsUpdate(EventsBase):
-    event_name: str | None
-    venue: str | None
-    date: date | None
+    event_name: str | None = Field(default=None)
+    venue: str | None = Field(default=None)
+    date: date | None = Field(default=None)
 
 # Eventsテーブルのモデル定義
 class Events(EventsBase, table=True):
@@ -38,3 +38,27 @@ class Events(EventsBase, table=True):
     expense_id : uuid.UUID | None = Field(foreign_key="expenses.id", ondelete="CASCADE")
     expenses: Expenses | None = Relationship(back_populates="events")
     actors: EventActor | None = Relationship(back_populates="events")
+
+# ActorsテーブルおよびCRUD操作用のベーススキーマ
+class ActorsBase(SQLModel):
+    name: str
+    favorite: bool = Field(default=False)
+
+# GET アーティスト情報取得(出力用)
+class ActorsPublic(ActorsBase):
+    id: uuid.UUID
+
+# POST アーティスト登録(入力用)
+class ActorsCreate(ActorsBase):
+    pass
+
+# PUT 更新用
+class ActorsUpdate(ActorsBase):
+    name: str | None = Field(default=None)
+
+class Actors(ActorsBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    name: str = Field(nullable=False, max_length=255)
+    events: EventActor | None = Relationship(back_populates="actors")
+
+    
