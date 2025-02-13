@@ -10,30 +10,31 @@ class TicketStatus(str,Enum):
     REJECTION = '落選' 
 
 # EventsテーブルおよびCRUD操作用のベーススキーマ
-class EventBase(SQLModel):
+class EventsBase(SQLModel):
     event_name:str = Field(description='ライブイベントのタイトル',examples=['ARABAKI ROCK FEST'])
     venue:str = Field(description='ライブイベントの会場名', examples=['国営みちのく杜の湖畔公園'])
     date:date
     ticket_status:TicketStatus | None = Field(default=None)
-    # ベースからは除外
-    # expense:int | None = None
 
-# POST ライブイベント登録
-class EventsCreate(EventBase):
+# GET イベント取得(出力用)
+class EventsPublic(EventsBase):
+    id: uuid.UUID
+
+# POST ライブイベント登録(入力用)
+class EventsCreate(EventsBase):
     pass
 
 # PUT ライブイベント更新(修正)
-class EventsUpdate(EventBase):
+class EventsUpdate(EventsBase):
     event_name: str | None
     venue: str | None
     date: date | None
-    ticket_status: TicketStatus | None
-    
+
 # Eventsテーブルのモデル定義
-class Events(EventBase, table=True):
+class Events(EventsBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    event_name: str = Field(nullable=False, max_length=200)
-    venue: str = Field(nullable=False, max_length=200)
-    expense_id : uuid.UUID | None = Field(foreign_key="expenses.id")
+    event_name: str = Field(nullable=False, max_length=255)
+    venue: str = Field(nullable=False, max_length=255)
+    expense_id : uuid.UUID | None = Field(foreign_key="expenses.id", ondelete="CASCADE")
     expenses: Expenses | None = Relationship(back_populates="events")
-    
+    actors: EventActor | None = Relationship(back_populates="events")
