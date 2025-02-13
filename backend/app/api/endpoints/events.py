@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter
 
-import schemas.events as events_schema
+import backend.app.schemas.models as events_schema
 
 router = APIRouter()
 
