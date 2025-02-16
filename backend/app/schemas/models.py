@@ -40,8 +40,9 @@ class Event(EventBase, table=True):
     event_name: str = Field(nullable=False, max_length=255)
     venue: str = Field(nullable=False, max_length=255)
     expense_id : uuid.UUID | None = Field(foreign_key="expenses.id", ondelete="CASCADE")
-    expenses: Expenses | None = Relationship(back_populates="events")
-    actors: list["Actor"] = Relationship(back_populates="event", link_model=EventActorLink)
+    
+    expense: list["Expense"]= Relationship(back_populates="events")
+    actors: list["Actor"] = Relationship(back_populates="events", link_model=EventActorLink)
 # ActorsテーブルおよびCRUD操作用のベーススキーマ
 class ActorBase(SQLModel):
     name: str
@@ -59,11 +60,35 @@ class ActorsCreate(ActorBase):
 class ActorsUpdate(ActorBase):
     name: str | None = Field(default=None)
 
-# Actorsテーブルのモデル定義
+# Actorテーブルのモデル定義
 class Actor(ActorBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str = Field(nullable=False, max_length=255)
     
     events: list["Event"] = Relationship(back_populates="actor", link_model=EventActorLink)
 
+# ExpenseテーブルおよびCRUDのモデル
+class ExpenseBase(SQLModel):
+    category: str
+    item_name: str
+    amount: int
+    
+# GET 取得（出力用）
+class ExpensePublic(ExpenseBase):
+    id: uuid.UUID 
+    event_id: uuid.UUID
 
+# POST 作成（入力用）
+class ExpenseCreate(ExpenseBase):
+    pass
+
+# PUT 更新用
+class ExpenseUpdate(ExpenseBase):
+    category: str | None
+    item_name: str | None
+    amount: int | None
+
+# Expenseテーブルのモデル定義
+class Expense(ExpenseBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    event_id: uuid.UUID | None = Field(default=None, foreign_key="events.id")
