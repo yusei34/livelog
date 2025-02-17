@@ -43,6 +43,7 @@ class Event(EventBase, table=True):
     
     expense: list["Expense"]= Relationship(back_populates="events")
     actors: list["Actor"] = Relationship(back_populates="events", link_model=EventActorLink)
+    
 # ActorsテーブルおよびCRUD操作用のベーススキーマ
 class ActorBase(SQLModel):
     name: str
