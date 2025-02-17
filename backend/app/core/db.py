@@ -4,7 +4,8 @@ from fastapi import Depends
 from app.core.config import DATABASE_URL
 
 # PostgreSQL用のエンジンを作成, DATABASE_URLはconfig.pyからインポート
-engine = create_engine(DATABASE_URL)
+# engine = create_engine(DATABASE_URL)
+engine = create_engine("postgresql://matsurayusei:yuma0304@localhost/livelog")
 
 def create_db_tables():
     # Alembicを使ったマイグレーションでのテーブル作成に後ほど修正予定

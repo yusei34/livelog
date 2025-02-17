@@ -1,14 +1,25 @@
-from typing import List
-from fastapi import APIRouter
+import uuid
+from typing import Any
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import select
+from app.core.db import SessionDep
+from app.models import Event, EventActorLink, EventCreate, EventPublic, EventUpdate, Message
+
 
 import backend.app.models as events_schema
 
-router = APIRouter()
+router = APIRouter(prefix="/events", tags=["events"])
 
-#sampleデータの登録
-@router.get('/events', response_model=list[events_schema.Events])
-async def list_events():
-    return [events_schema.Events(id=1, name="rock in japan", venue="ひたちなか", date="2024-09-23")]
+@router.get('/', response_model=list[EventPublic])
+async def read_events(
+    session: SessionDep, skip: int = 0, limit: int = Query(default=20, le=20)
+) -> Any :
+    """
+    Retrieve heroes.
+    """
+    events = session.exec(select(Event).offset(skip).limit(limit)).all()
+    return events
+    
 
 @router.post('/events',response_model=events_schema.Events)
 async def create_events(events_body: events_schema.EventsCreate):
