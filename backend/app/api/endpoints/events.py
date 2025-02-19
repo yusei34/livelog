@@ -6,8 +6,6 @@ from app.core.db import SessionDep
 from app.models import Event, EventActorLink, EventCreate, EventPublic, EventUpdate, Message
 
 
-import backend.app.models as events_schema
-
 router = APIRouter(prefix="/events", tags=["events"])
 
 @router.get('/', response_model=list[EventPublic])
