@@ -18,7 +18,7 @@ class EventBase(SQLModel):
     event_name: str = Field(description= 'ライブイベントのタイトル')
     venue: str = Field(description= 'ライブイベントの会場名')
     date: date
-    ticket_status: TicketStatus
+    ticket_status: str
 
 # GET イベント取得(出力用)
 class EventPublic(EventBase):
