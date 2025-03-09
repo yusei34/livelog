@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from app.core.db import SessionDep
-from app.models import EventBase,Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink
+from backend.app.models.models import EventBase,Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink
 
 
 router = APIRouter(prefix="/events", tags=["events"])
