@@ -1,5 +1,6 @@
 from sqlmodel import create_engine, Session, SQLModel
 
+
 from app.core.config import DATABASE_URL
 
 # PostgreSQL用のエンジンを作成, DATABASE_URLはconfig.pyからインポート
