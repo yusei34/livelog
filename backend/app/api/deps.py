@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import Depends, HTTPException
 from sqlmodel import Session
 
-from app.core.db import engine
+from core.db import engine
 
 
 

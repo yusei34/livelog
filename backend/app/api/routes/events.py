@@ -2,8 +2,8 @@ import uuid
 from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
-from app.core.db import SessionDep
-from backend.app.models.models import EventBase,Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink
+from ..deps import SessionDep
+from models.models import Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink
 
 
 router = APIRouter(prefix="/events", tags=["events"])
@@ -20,55 +20,55 @@ def read_events(
 
 @router.get('/{event_id}', response_model= EventPublic)
 def read_event(
-    event_id: uuid.UUID, session:SessionDep
+    session:SessionDep, event_id: uuid.UUID, 
 ) -> Any:
     """
     Get event by ID.
     """
     event = session.get(Event, event_id)
     if not event:
-        raise HTTPException(status_code=404, detail='event is not found')
+        raise HTTPException(status_code=404, detail='Event Not Found')
     return event
 
 @router.post('/', response_model= EventPublic)
-def create_event(event_in: EventCreate, session:SessionDep) -> Any:
+def create_event(session:SessionDep, event: EventCreate) -> Any:
     """
     Create new event.
     """
-    event = Event.model_validate(event_in)
-    session.add(event)
+    db_event = Event.model_validate(event)
+    session.add(db_event)
     session.commit()
-    session.refresh(event)
-    return event
+    session.refresh(db_event)
+    return db_event
 
 @router.put('/{event_id}', response_model= EventPublic)
 def update_event(
-    event_id: uuid.UUID, event_in: EventUpdate, session: SessionDep
+    session: SessionDep, event_id: uuid.UUID, event: EventUpdate 
 ) -> Any:
     """
     Update an event.
     """
-    event = session.get(Event, event_id)
-    if not event:
-        raise HTTPException(status_code= 404, detail='event is not found')
-    update_data = event_id.model_dump(exclude_unset= True)
-    event.sqlmodel_update(update_data)
-    session.add(event)
+    db_event = session.get(Event, event_id)
+    if not db_event:
+        raise HTTPException(status_code= 404, detail='Event Not Found')
+    update_data = event.model_dump(exclude_unset= True)
+    db_event.sqlmodel_update(update_data)
+    session.add(db_event)
     session.commit()
-    session.refresh(event)
-    return event
+    session.refresh(db_event)
+    return db_event
     
 @router.delete('/{event_id}', response_model= Message)
-def delete_event(event_id: uuid.UUID, session: SessionDep) -> Any:
+def delete_event(session: SessionDep, event_id: uuid.UUID) -> Any:
     """
     Delete an event.
     """
     event = session.get(Event, event_id)
     if not event:
-        raise HTTPException(status_code= 404, detail='event is not found')
+        raise HTTPException(status_code= 404, detail='Event Not Found')
     session.delete(event)
     session.commit()
-    return Message(message='event deleted successfully')
+    return Message(message='Event deleted successfully')
 
 
 
