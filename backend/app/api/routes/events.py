@@ -3,14 +3,14 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from ..deps import SessionDep
-from models.models import Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink
+from models.models import Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink, EventInExpenses
 
 
 router = APIRouter(prefix="/events", tags=["events"])
 
 @router.get('/', response_model=list[EventPublic])
 def read_events(
-    session: SessionDep, skip: int = 0, limit: int = Query(default=20, le=20)
+    *, session: SessionDep, skip: int = 0, limit: int = Query(default=20, le=20)
 ) -> Any :
     """
     Retrieve events.
@@ -18,9 +18,9 @@ def read_events(
     events = session.exec(select(Event).offset(skip).limit(limit)).all()
     return events
 
-@router.get('/{event_id}', response_model= EventPublic)
+@router.get('/{event_id}', response_model= EventInExpenses)
 def read_event(
-    session:SessionDep, event_id: uuid.UUID, 
+    *, session:SessionDep, event_id: uuid.UUID, 
 ) -> Any:
     """
     Get event by ID.
@@ -31,7 +31,7 @@ def read_event(
     return event
 
 @router.post('/', response_model= EventPublic)
-def create_event(session:SessionDep, event: EventCreate) -> Any:
+def create_event(*, session:SessionDep, event: EventCreate) -> Any:
     """
     Create new event.
     """
@@ -43,7 +43,7 @@ def create_event(session:SessionDep, event: EventCreate) -> Any:
 
 @router.put('/{event_id}', response_model= EventPublic)
 def update_event(
-    session: SessionDep, event_id: uuid.UUID, event: EventUpdate 
+    *, session: SessionDep, event_id: uuid.UUID, event: EventUpdate 
 ) -> Any:
     """
     Update an event.

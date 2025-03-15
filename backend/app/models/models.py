@@ -15,15 +15,14 @@ class EventBase(SQLModel):
     venue: str
     event_date: date | None
     
-    # expense_id: uuid.UUID | None = Field(default=None, foreign_key='expense.id')
+    
     
 
 # テーブルモデル
 class Event(EventBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     
-    # expense: Expense | None = Relationship(back_populates='event')
-    
+    expenses: list['Expense'] = Relationship(back_populates='event', cascade_delete=True)
     actors: list['Actor'] = Relationship(back_populates='events', link_model=EventActorLink)
     
 class EventCreate(EventBase):
@@ -66,9 +65,11 @@ class ExpenseBase(SQLModel):
     item_name: str
     amount: int
     
+    event_id: uuid.UUID | None = Field(default=None, foreign_key='event.id', ondelete='CASCADE')
+    
+    
 class ExpensePublic(ExpenseBase):
     id: uuid.UUID 
-    # event_id: uuid.UUID
 
 class ExpenseCreate(ExpenseBase):
     pass
@@ -81,7 +82,14 @@ class ExpenseUpdate(ExpenseBase):
 class Expense(ExpenseBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     
-    # event_id: uuid.UUID | None = Field(default=None, foreign_key="event.id")
+    event: Event | None = Relationship(back_populates='expenses')
+    
+class ExpenseInEvent(ExpensePublic):
+    event: EventPublic | None = None
+
+class EventInExpenses(EventPublic):
+    expenses: list[ExpensePublic] = []
+    
 
 # 共通メッセージおよび認証関連のモデル
 # Generic message

@@ -8,7 +8,7 @@ from alembic import context
 
 from core.config import DATABASE_URL
 
-from backend.app.models.models import EventActorLink, Event, Actor, Expense
+from models.models import EventActorLink, Event, Actor, Expense
 
 
 # this is the Alembic Config object, which provides

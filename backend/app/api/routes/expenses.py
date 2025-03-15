@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from ..deps import SessionDep
-from models.models import Expense, ExpenseCreate, ExpensePublic, ExpenseUpdate, Message 
+from models.models import Expense, ExpenseCreate, ExpensePublic, ExpenseUpdate, ExpenseInEvent, Message 
 
 router = APIRouter(prefix='/expenses', tags=['expense'])
 
@@ -20,7 +20,7 @@ def read_expenses(session: SessionDep, offset: int = 0, limit: int = Query(defau
     expense = session.exec(select(Expense).offset(offset).limit(limit)).all()
     return expense
 
-@router.get('/{expense_id}', response_model=ExpensePublic)
+@router.get('/{expense_id}', response_model=ExpenseInEvent)
 def read_expense(session: SessionDep, expense_id: uuid.UUID) ->Any:
     expense = session.get(Expense, expense_id)
     if not expense:
