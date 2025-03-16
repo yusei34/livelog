@@ -3,12 +3,27 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from ..deps import SessionDep
-from models.models import Event, EventCreate, EventPublic, EventUpdate, Message ,EventActorLink, EventInExpenses
+from models.models import Event, EventCreate, EventsPublic, EventPublic, EventUpdate, Message ,EventActorLink, EventRead, Actor
 
 
 router = APIRouter(prefix="/events", tags=["events"])
 
-@router.get('/', response_model=list[EventPublic])
+@router.post('/', response_model= EventPublic)
+def create_event(*, session: SessionDep, event: EventCreate, actor_ids: list[uuid.UUID]) -> Any:
+    """
+    Create new event.
+    """
+    db_event = Event.model_validate(event)
+    for actor_id in actor_ids:
+        actor = session.get(Actor, actor_id)
+        if actor:
+            db_event.actors.append(actor)
+    session.add(db_event)
+    session.commit()
+    session.refresh(db_event)
+    return db_event
+
+@router.get('/', response_model=list[EventsPublic])
 def read_events(
     *, session: SessionDep, skip: int = 0, limit: int = Query(default=20, le=20)
 ) -> Any :
@@ -18,40 +33,39 @@ def read_events(
     events = session.exec(select(Event).offset(skip).limit(limit)).all()
     return events
 
-@router.get('/{event_id}', response_model= EventInExpenses)
+@router.get('/{event_id}', response_model= EventRead)
 def read_event(
     *, session:SessionDep, event_id: uuid.UUID, 
 ) -> Any:
     """
     Get event by ID.
     """
+    # event = session.exec(select)
     event = session.get(Event, event_id)
     if not event:
         raise HTTPException(status_code=404, detail='Event Not Found')
     return event
 
-@router.post('/', response_model= EventPublic)
-def create_event(*, session:SessionDep, event: EventCreate) -> Any:
-    """
-    Create new event.
-    """
-    db_event = Event.model_validate(event)
-    session.add(db_event)
-    session.commit()
-    session.refresh(db_event)
-    return db_event
 
 @router.put('/{event_id}', response_model= EventPublic)
 def update_event(
-    *, session: SessionDep, event_id: uuid.UUID, event: EventUpdate 
+    *, session: SessionDep, event_id: uuid.UUID, event: EventUpdate, actor_ids: list[uuid.UUID] 
 ) -> Any:
     """
     Update an event.
-    """
+    """     
     db_event = session.get(Event, event_id)
+    
+    # for actor_id in actor_ids:
+    #     actor = session.get(Actor, actor_id)
+    #     if actor:
+    #         db_event.actors.append(actor)
+    
     if not db_event:
         raise HTTPException(status_code= 404, detail='Event Not Found')
+    
     update_data = event.model_dump(exclude_unset= True)
+            
     db_event.sqlmodel_update(update_data)
     session.add(db_event)
     session.commit()
