@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from ..deps import SessionDep
-from models.models import Actor, ActorCreate, ActorPublic, ActorsPublic, ActorUpdate, Event, Message
+from models.models import Actor, ActorCreate, ActorPublic, ActorsPublic, ActorRead, ActorUpdate, Event, Message
 
 router = APIRouter(prefix="/actors", tags=["actors"])
 
@@ -30,7 +30,7 @@ def read_actors(*, session:SessionDep, offset: int = 0, limit: int = Query(defau
     
     return ActorsPublic(data=actors)
 
-@router.get("/{actor_id}", response_model=ActorPublic)
+@router.get("/{actor_id}", response_model=ActorRead)
 def read_actor(*, session:SessionDep, actor_id: uuid.UUID) ->Any:
     
     actor = session.get(Actor, actor_id)
