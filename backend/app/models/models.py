@@ -55,7 +55,7 @@ class ActorUpdate(ActorBase):
     name: str | None = Field(default=None)
     favorite: bool | None = Field(default= False)
     
-    
+    events: list['Event'] = []
 
 class ExpenseBase(SQLModel):
     category: str

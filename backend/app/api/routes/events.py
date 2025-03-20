@@ -79,10 +79,13 @@ def delete_event(session: SessionDep, event_id: uuid.UUID) -> Any:
     Delete an event.
     """
     event = session.get(Event, event_id)
+    
     if not event:
         raise HTTPException(status_code= 404, detail='Event Not Found')
+    
     session.delete(event)
     session.commit()
+    
     return Message(message='Event deleted successfully')
 
 

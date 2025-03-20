@@ -3,13 +3,20 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from ..deps import SessionDep
-from models.models import Actor, ActorCreate, ActorPublic, ActorUpdate, Message
+from models.models import Actor, ActorCreate, ActorPublic, ActorUpdate, Event, Message
 
 router = APIRouter(prefix="/actors", tags=["actors"])
 
 @router.post("/", response_model=ActorPublic)
-def create_actor(session:SessionDep, actor:ActorCreate) ->Any:
+def create_actor(session: SessionDep, actor: ActorCreate, event_ids: list[uuid.UUID]) ->Any:
+    
     db_actor = Actor.model_validate(actor)
+    
+    for event_id in event_ids:
+        event = session.get(Event, event_id)
+        if event:
+            db_actor.events.append(event)
+    
     session.add(db_actor)
     session.commit()
     session.refresh(db_actor)
