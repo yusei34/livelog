@@ -3,12 +3,12 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from ..deps import SessionDep
-from models.models import Actor, ActorCreate, ActorPublic, ActorUpdate, Event, Message
+from models.models import Actor, ActorCreate, ActorPublic, ActorsPublic, ActorUpdate, Event, Message
 
 router = APIRouter(prefix="/actors", tags=["actors"])
 
 @router.post("/", response_model=ActorPublic)
-def create_actor(session: SessionDep, actor: ActorCreate, event_ids: list[uuid.UUID]) ->Any:
+def create_actor(*, session: SessionDep, actor: ActorCreate, event_ids: list[uuid.UUID]) ->Any:
     
     db_actor = Actor.model_validate(actor)
     
@@ -22,14 +22,18 @@ def create_actor(session: SessionDep, actor: ActorCreate, event_ids: list[uuid.U
     session.refresh(db_actor)
     return db_actor
 
-@router.get("/", response_model=list[ActorPublic])
-def read_actors(session:SessionDep, offset: int = 0, limit: int = Query(default=20, le=20)) ->Any:
+@router.get("/", response_model=ActorsPublic)
+def read_actors(*, session:SessionDep, offset: int = 0, limit: int = Query(default=20, le=20)) ->Any:
+    
     actors = session.exec(select(Actor).offset(offset).limit(limit)).all()
-    return actors
+    
+    return ActorsPublic(data=actors)
 
 @router.get("/{actor_id}", response_model=ActorPublic)
-def read_actor(session:SessionDep, actor_id: uuid.UUID) ->Any:
+def read_actor(*, session:SessionDep, actor_id: uuid.UUID) ->Any:
+    
     actor = session.get(Actor, actor_id)
+    
     if not actor:
         raise HTTPException(status_code=404, detail="Actor Not Found")
     return actor

@@ -47,7 +47,12 @@ class Actor(ActorBase, table=True):
 
 class ActorPublic(ActorBase):
     id: uuid.UUID
+    
+    events: list['Event'] = []
 
+class ActorsPublic(SQLModel):
+    data: list[ActorPublic]
+    
 class ActorCreate(ActorBase):
     pass
 
