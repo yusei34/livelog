@@ -60,7 +60,6 @@ class ActorUpdate(ActorBase):
     name: str | None = Field(default=None)
     favorite: bool | None = Field(default= False)
     
-    events: list['Event'] = []
 
 class ExpenseBase(SQLModel):
     category: str
@@ -98,7 +97,7 @@ class EventUpdate(EventBase):
     venue: str | None = None
     event_date: date | None = None
     
-    actors: list['Actor'] = []
+    # actors: list['Actor'] = []
     
 # 共通メッセージおよび認証関連のモデル
 # Generic message
