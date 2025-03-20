@@ -23,7 +23,7 @@ def create_event(*, session: SessionDep, event: EventCreate, actor_ids: list[uui
     session.refresh(db_event)
     return db_event
 
-@router.get('/', response_model=list[EventsPublic])
+@router.get('/', response_model=EventsPublic)
 def read_events(
     *, session: SessionDep, skip: int = 0, limit: int = Query(default=20, le=20)
 ) -> Any :
@@ -31,7 +31,7 @@ def read_events(
     Retrieve events.
     """
     events = session.exec(select(Event).offset(skip).limit(limit)).all()
-    return events
+    return EventsPublic(data=events)
 
 @router.get('/{event_id}', response_model= EventRead)
 def read_event(
@@ -40,7 +40,6 @@ def read_event(
     """
     Get event by ID.
     """
-    # event = session.exec(select)
     event = session.get(Event, event_id)
     if not event:
         raise HTTPException(status_code=404, detail='Event Not Found')
@@ -49,24 +48,26 @@ def read_event(
 
 @router.put('/{event_id}', response_model= EventPublic)
 def update_event(
-    *, session: SessionDep, event_id: uuid.UUID, event: EventUpdate, actor_ids: list[uuid.UUID] 
+    *, session: SessionDep, event_id: uuid.UUID,event: EventUpdate, actor_ids: list[uuid.UUID]
 ) -> Any:
     """
     Update an event.
     """     
     db_event = session.get(Event, event_id)
     
-    # for actor_id in actor_ids:
-    #     actor = session.get(Actor, actor_id)
-    #     if actor:
-    #         db_event.actors.append(actor)
-    
     if not db_event:
         raise HTTPException(status_code= 404, detail='Event Not Found')
     
     update_data = event.model_dump(exclude_unset= True)
-            
     db_event.sqlmodel_update(update_data)
+    
+    db_event.actors.clear()
+    
+    for actor_id in actor_ids:
+        actor = session.get(Actor, actor_id)
+        if actor:
+            db_event.actors.append(actor)
+    
     session.add(db_event)
     session.commit()
     session.refresh(db_event)
@@ -78,10 +79,13 @@ def delete_event(session: SessionDep, event_id: uuid.UUID) -> Any:
     Delete an event.
     """
     event = session.get(Event, event_id)
+    
     if not event:
         raise HTTPException(status_code= 404, detail='Event Not Found')
+    
     session.delete(event)
     session.commit()
+    
     return Message(message='Event deleted successfully')
 
 
