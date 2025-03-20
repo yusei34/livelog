@@ -20,6 +20,7 @@ def create_actor(*, session: SessionDep, actor: ActorCreate, event_ids: list[uui
     session.add(db_actor)
     session.commit()
     session.refresh(db_actor)
+    
     return db_actor
 
 @router.get("/", response_model=ActorsPublic)
@@ -36,25 +37,42 @@ def read_actor(*, session:SessionDep, actor_id: uuid.UUID) ->Any:
     
     if not actor:
         raise HTTPException(status_code=404, detail="Actor Not Found")
+    
     return actor
 
 @router.put("/{actor_id}", response_model=ActorPublic)
-def update_actor(session: SessionDep, actor_id: uuid.UUID, actor: ActorUpdate) ->Any:
+def update_actor(*, session: SessionDep, actor_id: uuid.UUID, actor: ActorUpdate, event_ids: list[uuid.UUID]) ->Any:
+    
     db_actor = session.get(Actor, actor_id)
+    
     if not db_actor:
         raise HTTPException(status_code=404, detail="Actor Not Found")
+    
     update_data = actor.model_dump(exclude_unset=True)
     db_actor.sqlmodel_update(update_data)
+    
+    db_actor.events.clear()
+    
+    for event_id in event_ids:
+        event = session.get(Event, event_id)
+        if event:
+            db_actor.events.append(event)
+    
     session.add(db_actor)
     session.commit()
     session.refresh(db_actor)
+    
     return db_actor
 
 @router.delete("/{actor_id}", response_model=Message)
-def delete_actor(session: SessionDep, actor_id: uuid.UUID) ->Any:
+def delete_actor(*, session: SessionDep, actor_id: uuid.UUID) ->Any:
+    
     actor = session.get(Actor, actor_id)
+    
     if not actor:
         raise HTTPException(status_code=404, detail="Actor Not Found")
+    
     session.delete(actor)
     session.commit()
+    
     return Message(message='Actor deleted successfully')
