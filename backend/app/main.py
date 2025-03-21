@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from api.routes import events, actors, expenses
-from core.db import create_db_tables
+
 
 app = FastAPI()
 
