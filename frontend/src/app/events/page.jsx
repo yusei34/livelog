@@ -9,8 +9,9 @@ export default function EventsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/events`
     axios
-      .get('http://127.0.0.1:8000/events/?skip=0&limit=20')
+      .get(apiUrl)
       .then((response) => {
         setEvents(response.data.data);
         setLoading(false);
