@@ -3,20 +3,9 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { registerEvent } from './action';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { fetchActors } from '@/lib/fetchActors';
+import SubmitButton from '@/components/SubmitButton';
 
-// Submit中のローディング表示
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="bg-blue-600 text-white px-4 py-2 rounded"
-    >
-      {pending ? '送信中...' : '登録'}
-    </button>
-  );
-}
 
 export default function NewEventPage() {
   const router = useRouter();
