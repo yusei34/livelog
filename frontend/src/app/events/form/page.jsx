@@ -1,8 +1,8 @@
 'use client';
 import { useFormState, useFormStatus } from 'react-dom';
-import { registerEvent } from './action';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { registerEvent } from './action';
 import { fetchActors } from '@/lib/fetchActors';
 import SubmitButton from '@/components/SubmitButton';
 
@@ -10,6 +10,9 @@ import SubmitButton from '@/components/SubmitButton';
 export default function NewEventPage() {
   const router = useRouter();
   const [formState, formAction] = useFormState(registerEvent, { message: '', success: false });
+  const [actors, setActors] = React.useState([]);
+
+  
 
   // 成功時リダイレクト
   useEffect(() => {

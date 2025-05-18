@@ -1,29 +1,17 @@
 'use server';
+import { postEvent } from '@/lib/fetchEvents';
 
-import axios from 'axios';
 
 export async function registerEvent(prevState, formData) {
   const title = formData.get('title');
   const venue = formData.get('venue');
   const event_date = formData.get('event_date');
-  const actors = [] //データの取得方法について検討
+  const actor_ids = [] //データの取得方法について検討
 
   if (!title || !venue || !event_date) {
-    return { message: '全ての項目を入力してください' };
+    return { message: 'イベント名,会場,開催日は必須入力です。' };
   }
 
-  try {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
-      event:{
-      title,
-      venue,
-      event_date
-    },
-    actor_ids:actors
-    });
-    return { success: true };
-  } catch (err) {
-    console.error(err);
-    return { message: '登録に失敗しました' };
-  }
+  const event = { title, venue, event_date };
+  return await postEvent(event, actor_ids)
 }
