@@ -7,6 +7,11 @@ import { useRouter } from 'next/navigation';
 import { registerEvent } from '@/app/events/form/action';
 import { fetchActors } from '@/lib/fetchActors';
 import SubmitButton from './SubmitButton';
+import InputEventTitle from "./InputEventTitle";
+import InputEventVenue from './InputEventVenue';
+import InputEventDate from './InputEventDate';
+import EventRegisterForm from './EventRegisterForm';
+
 
 export default function EventFormModal({ isOpen, setIsOpen }) {
     const [formState, formAction] = useFormState(registerEvent, { message: '', success: false });
@@ -46,22 +51,7 @@ export default function EventFormModal({ isOpen, setIsOpen }) {
               <Dialog.Panel className="w-full max-w-md p-6 bg-white border rounded-2xl shadow-lg space-y-4">
                 <Dialog.Title className="text-lg font-bold">イベント登録</Dialog.Title>
                 {formState.message && <p className="text-red-500">{formState.message}</p>}
-                <form action={formAction} className="space-y-4">
-                  <input name="title" placeholder="イベント名" className="w-full border p-2 rounded" />
-                  <input name="venue" placeholder="会場" className="w-full border p-2 rounded" />
-                  <input name="event_date" type="date" className="w-full border p-2 rounded" />
-                  <div className="space-y-1">
-                    {actors.map(actor => (
-                      <label key={actor.id} className="block">
-                        <input type="checkbox" name="actor_ids" value={actor.id} className="mr-2" />
-                        {actor.name}
-                      </label>
-                    ))}
-                  </div>
-                  <div className="text-right">
-                    <SubmitButton />
-                  </div>
-                </form>
+                <EventRegisterForm />
               </Dialog.Panel>
             </Transition.Child>
           </div>
