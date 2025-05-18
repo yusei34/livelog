@@ -1,5 +1,8 @@
 'use server';
 
+
+
+
 import axios from 'axios';
 
 export async function registerEvent(prevState, formData) {
@@ -9,7 +12,7 @@ export async function registerEvent(prevState, formData) {
   const actors = [] //データの取得方法について検討
 
   if (!title || !venue || !event_date) {
-    return { message: '全ての項目を入力してください' };
+    return { message: 'イベント名,会場,開催日は必須入力です。' };
   }
 
   try {
