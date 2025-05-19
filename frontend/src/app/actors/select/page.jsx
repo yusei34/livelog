@@ -1,1 +1,7 @@
-<h1>aaa</h1>
+import React from 'react'
+
+export default function ActorSelectPage (){
+  return (
+    <div>page</div>
+  )
+}
