@@ -6,10 +6,6 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { registerEvent } from '@/app/events/form/action';
 import { fetchActors } from '@/lib/fetchActors';
-import SubmitButton from './SubmitButton';
-import InputEventTitle from "./InputEventTitle";
-import InputEventVenue from './InputEventVenue';
-import InputEventDate from './InputEventDate';
 import EventRegisterForm from './EventRegisterForm';
 
 

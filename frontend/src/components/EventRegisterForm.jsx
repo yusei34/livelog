@@ -1,12 +1,14 @@
 import React from "react";
 
+import Link from 'next/link';
+
 import { useFormState, useFormStatus } from "react-dom";
 import { registerEvent } from "@/app/events/form/action";
-import InputEventTitle from "./InputEventTitle";
-import InputEventVenue from "./InputEventVenue";
-import InputEventDate from "./InputEventDate";
-import InputEventActors from "./InputEventActors";
-import SubmitButton from "./SubmitButton";
+import InputEventTitle from "EventFormParts/InputEventTitle";
+import InputEventVenue from "EventFormParts/InputEventVenue";
+import InputEventDate from "EventFormParts/InputEventDate";
+import InputEventActors from "EventFormParts/InputEventActors";
+import SubmitButton from "SubmitButton";
 
 const EventRegisterForm = () => {
   const [formState, formAction] = useFormState(registerEvent, {
@@ -26,7 +28,9 @@ const EventRegisterForm = () => {
           <InputEventDate />
         </div>
         <div>
-          <InputEventActors />
+          <Link href='../app/actors/select/page.jsx'>
+            <InputEventActors />
+          </Link>
         </div>
         <div>
             <SubmitButton />
