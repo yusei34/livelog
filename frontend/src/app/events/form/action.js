@@ -1,6 +1,6 @@
 'use server';
 import { postEvent } from '@/lib/fetchEvents';
-
+import { fetchActorsByIds } from '@/lib/fetchActors';
 
 export async function registerEvent(prevState, formData) {
   const title = formData.get('title');
