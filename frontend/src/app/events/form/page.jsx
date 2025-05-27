@@ -1,4 +1,14 @@
-// "use client";
+"use client";
+
+import EventFormModal from "../../../components/EventFormModal" ;
+
+export default function EventForm() {
+    return
+        <EventFormModal/>
+    
+}
+
+
 // import { useFormState, useFormStatus } from "react-dom";
 // import React, { useEffect } from "react";
 // import { useRouter } from "next/navigation";
