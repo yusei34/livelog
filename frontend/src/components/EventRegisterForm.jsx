@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { registerEvent } from '@/app/events/form/action';
@@ -8,11 +8,11 @@ import SubmitButton from './SubmitButton';
 import InputEventTitle from './EventFormParts/InputEventTitle';
 import InputEventVenue from './EventFormParts/InputEventVenue';
 import InputEventDate from './EventFormParts/InputEventDate';
-import InputEventActors from './EventFormParts/InputEventActors';
+// import InputEventActors from './EventFormParts/InputEventActors';
 import Link from 'next/link';
 
 export default function EventRegisterForm() {
-  const [formState, formAction] = useFormState(registerEvent, {
+  const [formState, formAction] =useActionState(registerEvent, {
     message: '',
     success: false,
   });
