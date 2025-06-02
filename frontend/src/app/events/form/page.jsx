@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Button } from "@headlessui/react";
 import Link from "next/link";
 import axios from "axios";
 
@@ -96,14 +97,11 @@ export default function EventFormPage() {
         <div>
           <label className="block font-semibold">出演アーティスト</label>
           <div>
-            <button type="button">
+            <Button className="rounded bg-sky-600 px-4 py-2 text-sm text-white data-active:bg-sky-700 data-hover:bg-sky-500">
               <Link href="../actors/select/" className="block font-semibold">
                 追加
               </Link>
-            </button>
-            <Link href="../actors/select/" className="block font-semibold">
-              追加
-            </Link>
+            </Button>
           </div>
 
           <ul className="space-y-2">
