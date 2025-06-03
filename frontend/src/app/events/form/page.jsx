@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { toast } from 'sonner';
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@headlessui/react";
 import Link from "next/link";
@@ -15,6 +16,30 @@ export default function EventFormPage() {
   const [eventDate, setEventDate] = useState("");
   const [actorIds, setActorIds] = useState([]);
   const [actorNames, setActorNames] = useState([]);
+
+  useEffect(() => {
+    // 初期化（localStorageから読み込み）
+    const savedTitle = localStorage.getItem("eventForm.title");
+    const savedVenue = localStorage.getItem("eventForm.venue");
+    const savedDate = localStorage.getItem("eventForm.date");
+  
+    if (savedTitle) setTitle(savedTitle);
+    if (savedVenue) setVenue(savedVenue);
+    if (savedDate) setEventDate(savedDate);
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem("eventForm.title", title);
+  }, [title]);
+  
+  useEffect(() => {
+    localStorage.setItem("eventForm.venue", venue);
+  }, [venue]);
+  
+  useEffect(() => {
+    localStorage.setItem("eventForm.date", eventDate);
+  }, [eventDate]);
+  
 
   useEffect(() => {
     const ids = searchParams.get("actor_ids");
@@ -48,11 +73,10 @@ export default function EventFormPage() {
         },
         actor_ids: actorIds
       });
-      alert("イベントを登録しました");
+      toast.success("イベントを登録しました");
       router.push("/events");
     } catch (err) {
-      alert("登録に失敗しました");
-      console.error(err);
+      toast.error("登録に失敗しました");
     }
   };
 
@@ -134,99 +158,3 @@ export default function EventFormPage() {
   );
 }
 
-// "use client";
-
-// import EventFormModal from "../../../components/EventFormModal";
-// import { useSearchParams } from 'next/navigation';
-
-// export default function EventForm() {
-//   const searchParams = useSearchParams();
-
-//   const isOpen = searchParams.get("isOpen") === "true";
-
-//   const actorIds = searchParams.get("actor_ids");
-//   const actorNames = searchParams.get("actor_names");
-
-//   const parsedIds = actorIds ? JSON.parse(decodeURIComponent(actorIds)) : [];
-//   const parsedNames = actorNames
-//     ? JSON.parse(decodeURIComponent(actorNames))
-//     : [];
-
-//   return (
-//     <EventFormModal
-//       isOpen={isOpen}
-//       initialActorIds={parsedIds}
-//       initialActorNames={parsedNames}
-//     />
-//   );
-// }
-
-// import { useFormState, useFormStatus } from "react-dom";
-// import React, { useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { registerEvent } from "./action";
-// import { fetchActors } from "@/lib/fetchActors";
-// import SubmitButton from "@/components/SubmitButton";
-
-// export default function NewEventPage() {
-//   const router = useRouter();
-//   const [formState, formAction] = useFormState(registerEvent, {
-//     message: "",
-//     success: false
-//   });
-//   const [actors, setActors] = React.useState([]);
-
-//   useEffect(() => {
-//     fetchActors().then(setActors).catch(console.error);
-//   }, []);
-
-//   // 成功時リダイレクト
-//   useEffect(() => {
-//     if (formState.success) {
-//       router.push("/events");
-//     }
-//   }, [formState, router]);
-
-//   return (
-//     <div className="p-6 max-w-md mx-auto space-y-4">
-//       <h1 className="text-2xl font-bold">イベント登録</h1>
-//       {formState.message && <p className="text-red-500">{formState.message}</p>}
-//       <form action={formAction} className="space-y-4">
-//         <input
-//           type="text"
-//           name="title"
-//           placeholder="イベント名"
-//           className="w-full border p-2 rounded"
-//         />
-//         <input
-//           type="text"
-//           name="venue"
-//           placeholder="会場"
-//           className="w-full border p-2 rounded"
-//         />
-//         <input
-//           type="date"
-//           name="event_date"
-//           className="w-full border p-2 rounded"
-//         />
-
-//         <div className="space-y-2">
-//           <p>出演アクター：</p>
-//           {actors.map((actor) => (
-//             <label key={actor.id} className="block">
-//               <input
-//                 type="checkbox"
-//                 name="actor_ids"
-//                 value={actor.id}
-//                 className="mr-2"
-//               />
-//               {actor.name}
-//             </label>
-//           ))}
-//         </div>
-
-//         <SubmitButton />
-//       </form>
-//     </div>
-//   );
-// }
