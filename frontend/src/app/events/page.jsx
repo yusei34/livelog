@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { Button } from '@headlessui/react'
-import { fetchEvents } from "@/lib/fetchEvents";
+import { fetchEvents } from "@/lib/api/fetchEvents";
 import Link from 'next/link'
 import EventCard from "@/components/EventCard";
-import EventFormModal from "../../components/EventFormModal";
+import Header from "@/components/Header";
+
 
 
 export default function EventsPage() {
@@ -16,6 +17,8 @@ export default function EventsPage() {
   }, []);
 
   return (
+    <>
+    {/* <Header/> */}
     <div className="p-4 m-8 space-y-6 ">
       <h1 className="text-2xl font-bold">イベント一覧</h1>
 
@@ -35,5 +38,6 @@ export default function EventsPage() {
       </div>
 
     </div>
+    </>
   );
 }

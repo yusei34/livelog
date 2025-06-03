@@ -11,7 +11,6 @@ const EventCard = ({event}) => {
         <h2 className="text-xl font-bold">{event.title}</h2>
         <p className="text-sm ">{date}</p>
         <p className="text-sm">{event.venue}</p>
-        {/* <p className="text-xs ">{event.actors.length} actors</p> */}
     </div>
   )
 }
