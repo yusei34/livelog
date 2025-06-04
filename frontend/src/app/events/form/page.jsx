@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@headlessui/react";
 import Link from "next/link";
@@ -22,24 +22,23 @@ export default function EventFormPage() {
     const savedTitle = localStorage.getItem("eventForm.title");
     const savedVenue = localStorage.getItem("eventForm.venue");
     const savedDate = localStorage.getItem("eventForm.date");
-  
+
     if (savedTitle) setTitle(savedTitle);
     if (savedVenue) setVenue(savedVenue);
     if (savedDate) setEventDate(savedDate);
   }, []);
-  
+
   useEffect(() => {
     localStorage.setItem("eventForm.title", title);
   }, [title]);
-  
+
   useEffect(() => {
     localStorage.setItem("eventForm.venue", venue);
   }, [venue]);
-  
+
   useEffect(() => {
     localStorage.setItem("eventForm.date", eventDate);
   }, [eventDate]);
-  
 
   useEffect(() => {
     const ids = searchParams.get("actor_ids");
@@ -74,6 +73,11 @@ export default function EventFormPage() {
         actor_ids: actorIds
       });
       toast.success("イベントを登録しました");
+
+      localStorage.removeItem("eventForm.title");
+      localStorage.removeItem("eventForm.venue");
+      localStorage.removeItem("eventForm.date");
+      
       router.push("/events");
     } catch (err) {
       toast.error("登録に失敗しました");
@@ -157,4 +161,3 @@ export default function EventFormPage() {
     </div>
   );
 }
-

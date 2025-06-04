@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { Button } from '@headlessui/react'
 import { fetchEvents } from "@/lib/api/fetchEvents";
 import Link from 'next/link'
+
 import EventCard from "@/components/EventCard";
+import EventListItem from "@/components/EventListItem";
 import Header from "@/components/Header";
 
 
@@ -29,13 +31,16 @@ export default function EventsPage() {
         </Link>
       </Button>
       </div>
-      <div className="grid grid-cols-4">
-        {events.length === 0 ? (
-          <p>イベントがありません</p>
-        ) : (
-          events.map((event) => <EventCard key={event.id} event={event} />)
-        )}
+      <div　className="flex flex-col-reverse"> 
+        {/* <div className="grid grid-cols-4"> */}
+          {events.length === 0 ? (
+            <p>イベントがありません</p>
+          ) : (
+            events.map((event) => <EventListItem key={event.id} event={event} />)
+          )}
+        {/* </div> */}
       </div>
+     
 
     </div>
     </>
