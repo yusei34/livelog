@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
+from sqlmodel import select,or_
 from ..deps import SessionDep
 from models.models import Event, EventCreate, EventsPublic, EventPublic, EventUpdate, Message ,EventActorLink, EventRead, Actor
 
@@ -32,7 +32,11 @@ def read_events(
     """
     Retrieve events.
     """
-    events = session.exec(select(Event).offset(skip).limit(limit)).all()
+    if q:
+        result = select(Event).where(or_(Event.title.ilike(f'%{q}%'),
+                                        #  Event.venue.ilike(f'%{q}%') #会場名も含めて検索場合はコメント外す
+                                         ))
+    events = session.exec(result.offset(skip).limit(limit)).all()
     return EventsPublic(data=events)
 
 @router.get('/{event_id}', response_model= EventRead)
