@@ -64,7 +64,7 @@ const PopOver = () => {
           <div className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl z-10 max-h-80 overflow-y-auto transition">
             {events.length > 0 ? (
               events.map((event) => (
-                <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
+                <div className="px-6 py-3 hover:bg-gray-50 cursor-pointer transition flex items-center gap-3">
                   <Link href="events/form/" key={event.id}>
                     <span className="font-medium text-gray-900">
                       {event.title}
