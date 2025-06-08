@@ -36,6 +36,8 @@ def read_events(
         result = select(Event).where(or_(Event.title.ilike(f'%{q}%'),
                                         #  Event.venue.ilike(f'%{q}%') #会場名も含めて検索場合はコメント外す
                                          ))
+    else:
+        result = select(Event)
     events = session.exec(result.offset(skip).limit(limit)).all()
     return EventsPublic(data=events)
 
