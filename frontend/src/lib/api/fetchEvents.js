@@ -11,6 +11,16 @@ export async function fetchEvents() {
   }
 }
 
+export async function fetchQueryEvents(q) {
+  try {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/events?q=${q}`);
+    return res.data.data; 
+  } catch (error) {
+    console.error('イベント取得失敗:', error);
+    throw new Error('イベント取得に失敗しました');
+  }
+}
+
 export async function postEvent(event, actor_ids) {
     try {
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/events`,{
