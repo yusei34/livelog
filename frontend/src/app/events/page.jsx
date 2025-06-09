@@ -24,26 +24,18 @@ export default function EventsPage() {
 
   return (
     <>
-      {/* <Header/> */}
-      <div className="p-4 m-8 space-y-6 ">
-       
+      <Header />
+      <div className="p-4 m-8 space-y-6 border">
         <h1 className="text-2xl font-bold">イベント一覧</h1>
-          <PopOver/>
-      
+
         <div className="flex justify-end">
           <Button className="w-5% bg-blue-600 text-white px-4 py-2 rounded-2xl ">
             <Link href="events/form/">新規イベント登録</Link>
           </Button>
         </div>
-        <div className="flex flex-row">
-        
-          <EventsSearch className='w-6/10'/>
-          <Filter className='w-4/10'/>
+        <PopOver className="justify-self-center" />
 
-        </div>
-
-
-        <div className="flex flex-col-reverse">
+        <div className="overflow-y-auto transition flex flex-col-reverse rounded-3xl border border-green-400">
           {events.length === 0 ? (
             <p>イベントがありません</p>
           ) : (
