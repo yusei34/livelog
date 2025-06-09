@@ -36,16 +36,16 @@ const PopOver = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center ">
-      <div className="relative w-full max-w-lg">
+    <div className="border">
+      <div className="relative w-full">
         <input
           type="text"
           value={inputText}
           onChange={handleSearch}
           onFocus={onFocus}
-          onBlur={onBlur}
+        //   onBlur={onBlur}
           placeholder="アーティスト、曲、アルバムを検索"
-          className="w-full rounded-full bg-white/90 px-12 py-3 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+          className="w-full rounded-full bg-white/90 px-12 py-3 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition "
         />
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
           <svg
@@ -64,13 +64,13 @@ const PopOver = () => {
           <div className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl z-10 max-h-80 overflow-y-auto transition">
             {events.length > 0 ? (
               events.map((event) => (
-                <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
-                  <Link href="events/form/" key={event.id}>
-                    <span className="font-medium text-gray-900">
+               
+                  <Link href="/" key={event.id} className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
+                    {/* <span className="font-medium text-gray-900"> */}
                       {event.title}
-                    </span>
+                    {/* </span> */}
                   </Link>
-                </div>
+                
               ))
             ) : (
               <div className="px-6 py-4 text-gray-400">
@@ -121,3 +121,5 @@ const PopOver = () => {
 };
 
 export default PopOver;
+{/* <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
+</div> */}
