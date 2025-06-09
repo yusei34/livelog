@@ -1,15 +1,26 @@
 import React from "react";
+import SearchResultItems from'../components/SearchResultItems'
 import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { fetchQueryEvents } from "@/lib/api/fetchEvents";
 
 const PopOver = () => {
-  const inputRef = (useRef < HTMLInputElement) | (null > null);
+  const inputRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState();
   const [events, setEvents] = useState([]);
   const [inputText, setInputText] = useState("");
+
+  const handleKeyDown = useCallback((e) => {
+    const input = inputRef.current;
+    if (input) {
+      if (e.key === "Escape") {
+        input.blur();
+        setOpen(false);
+      }
+    }
+  }, []);
 
   const onFocus = () => {
     setOpen(true);
@@ -41,9 +52,11 @@ const PopOver = () => {
         <input
           type="text"
           value={inputText}
+          ref={inputRef}
+          onKeyDown={handleKeyDown}
           onChange={handleSearch}
           onFocus={onFocus}
-        //   onBlur={onBlur}
+          //   onBlur={onBlur}
           placeholder="アーティスト、曲、アルバムを検索"
           className="w-full rounded-full bg-white/90 px-12 py-3 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition "
         />
@@ -64,13 +77,7 @@ const PopOver = () => {
           <div className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl z-10 max-h-80 overflow-y-auto transition">
             {events.length > 0 ? (
               events.map((event) => (
-               
-                  <Link href="/" key={event.id} className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
-                    {/* <span className="font-medium text-gray-900"> */}
-                      {event.title}
-                    {/* </span> */}
-                  </Link>
-                
+                <SearchResultItems key={event.id} event={event}/>
               ))
             ) : (
               <div className="px-6 py-4 text-gray-400">
@@ -81,45 +88,11 @@ const PopOver = () => {
         )}
       </div>
     </div>
-    //     <div className="flex ">
-    //         <Popover className="relative">
-    //       <PopoverButton
-    //         as="input"
-    //         type="text"
-    //         value={inputText}
-    //         onChange={handleSearch}
-    //         onFocus={onFocus}
-    //         onBlur={onBlur}
-    //         className="border rounded-3xl w-4/7 focus:bg-blue-100 hover:shadow"
-    //       />
-    //       <PopoverPanel anchor="bottom" className="flex flex-col border">
-    //         {open && (
-    //           <div className="">
-    //             {inputText ? (
-    //               <div className="">
-    //                 {events.map((event) => (
-    //                   <li key={event.id} className="flex items-center gap-2">
-    //                     <Link href="/">
-    //                       <span className="block w-full px-4 py-2 hover:bg-blue-50 cursor-pointer">
-    //                         {event.title}
-    //                       </span>
-    //                     </Link>
-    //                   </li>
-    //                 ))}
-    //               </div>
-    //             ) : (
-    //               <div>
-    //                 <h2 className="">検索キーワードを入力してください</h2>
-    //               </div>
-    //             )}
-    //           </div>
-    //         )}
-    //       </PopoverPanel>
-    //     </Popover>
-    //     </div>
   );
 };
 
 export default PopOver;
-{/* <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
-</div> */}
+{
+  /* <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
+</div> */
+}
