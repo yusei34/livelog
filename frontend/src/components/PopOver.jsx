@@ -88,9 +88,10 @@ const PopOver = () => {
         )}
       </div>
     </div>
-
+)
+}
 export default PopOver;
-{
+
   /* <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
 </div> */
-}
+
