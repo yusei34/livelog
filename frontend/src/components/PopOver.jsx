@@ -1,12 +1,11 @@
 import React from "react";
 import SearchResultItems from'../components/SearchResultItems'
 import { useEffect, useState, useRef, useCallback } from "react";
-import Link from "next/link";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { fetchQueryEvents } from "@/lib/api/fetchEvents";
 
 const PopOver = () => {
   const inputRef = useRef(null);
+  const wrapperRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState();
   const [events, setEvents] = useState([]);
@@ -26,10 +25,6 @@ const PopOver = () => {
     setOpen(true);
   };
 
-  const onBlur = () => {
-    setTimeout(() => setOpen(false), 100);
-  };
-
   const handleSearch = (e) => {
     setInputText(e.target.value);
   };
@@ -46,8 +41,22 @@ const PopOver = () => {
     inputRef.current?.focus(); // コンポーネントマウント時にフォーカス
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // wrapperRefの外側をクリックした場合のみsetOpen(false)
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    // クリーンアップ（イベントリスナ解除）
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="border">
+    <div ref={wrapperRef} className="border">
       <div className="relative w-full">
         <input
           type="text"
@@ -56,7 +65,6 @@ const PopOver = () => {
           onKeyDown={handleKeyDown}
           onChange={handleSearch}
           onFocus={onFocus}
-          //   onBlur={onBlur}
           placeholder="アーティスト、曲、アルバムを検索"
           className="w-full rounded-full bg-white/90 px-12 py-3 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition "
         />
@@ -88,9 +96,10 @@ const PopOver = () => {
         )}
       </div>
     </div>
-
+)
+}
 export default PopOver;
-{
+
   /* <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
 </div> */
-}
+
