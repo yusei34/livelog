@@ -7,7 +7,6 @@ const PopOver = () => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState();
   const [events, setEvents] = useState([]);
   const [inputText, setInputText] = useState("");
 
@@ -56,7 +55,7 @@ const PopOver = () => {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="border">
+    <div ref={wrapperRef} className="">
       <div className="relative w-full">
         <input
           type="text"
