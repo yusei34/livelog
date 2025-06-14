@@ -1,9 +1,11 @@
-import Header from '@/components/Header'
+import Header from "@/components/Header";
+import EventsArea from "@/components/EventsArea";
 
 export default function Home() {
   return (
- 
-    <Header />
-  
+    <>
+      <Header />
+      <EventsArea />
+    </>
   );
 }
