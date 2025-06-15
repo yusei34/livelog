@@ -3,7 +3,7 @@ import SearchResultItems from'../components/SearchResultItems'
 import { useEffect, useState, useRef, useCallback } from "react";
 import { fetchQueryEvents } from "@/lib/api/fetchEvents";
 
-const PopOver = () => {
+const SearchBar = () => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -56,7 +56,7 @@ const PopOver = () => {
 
   return (
     <div ref={wrapperRef} className="">
-      <div className="relative w-full">
+      <div className="relative w-full ">
         <input
           type="text"
           value={inputText}
@@ -64,8 +64,8 @@ const PopOver = () => {
           onKeyDown={handleKeyDown}
           onChange={handleSearch}
           onFocus={onFocus}
-          placeholder="アーティスト、曲、アルバムを検索"
-          className="w-full rounded-full bg-white/90 px-12 py-3 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition "
+          placeholder="ライブを検索"
+          className="border border-green-100 w-full rounded-full bg-white/90 px-12 py-3 text-gray-900 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition "
         />
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
           <svg
@@ -97,8 +97,7 @@ const PopOver = () => {
     </div>
 )
 }
-export default PopOver;
+export default SearchBar;
 
-  /* <div className="px-6 py-3 hover:bg-green-50 cursor-pointer transition flex items-center gap-3">
-</div> */
+  
 
