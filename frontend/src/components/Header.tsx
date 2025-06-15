@@ -20,7 +20,7 @@ export default function Header() {
           <span className="text-2xl font-bold tracking-tight">GIGLog</span>
         </Link>
 
-        <nav className="flex items-center gap-4">
+        <nav className="flex border-green-700 gap-4">
           <Link
             href="/"
             className={cn(
