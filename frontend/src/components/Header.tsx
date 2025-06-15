@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white">
-      <div className="container flex h-16 items-center justify-between">
+      <div className=" flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="p-1.5">
             {/* <img src="/Gig log.svg" alt="logo" className="h-30 w-auto"/> */}
