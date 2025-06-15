@@ -9,10 +9,12 @@ const EventListItem = ({ event }) => {
   });
   return (
     <>
-      <div className="flex items-center justify-between  border-b pb-4 m-2 hover:bg-muted/50 p-2 rounded-md transition-colors">
+      <div className="flex items-center justify-between rounded-b-lg border-b border-gray-200 p-4  hover:bg-gray-50 hover:transition-colors hover:shadow-md">
         <div className="space-y-1">
-          <h2 className="font-medium text-lg">{event.title}</h2>
-          <div className="flex items-center text-sm text-muted-foreground">
+          <div className="px-2">
+            <h2 className="font-medium text-lg">{event.title}</h2>
+          </div>
+          <div className="px-2 flex items-center text-sm text-gray-700 text-muted-foreground">
             <Calendar className="h-3.5 w-3.5 mr-1" />
             <span>{date}</span>
             <span className="mx-2">•</span>

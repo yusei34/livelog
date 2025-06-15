@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import {
-  PlusCircle,
-  CalendarIcon,
-  Music,
   Ticket,
-  BarChart3,
   ChevronRight
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
