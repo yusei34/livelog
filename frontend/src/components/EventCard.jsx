@@ -15,4 +15,4 @@ const EventCard = ({event}) => {
   )
 }
 
-export default EventCard
+export default EventCard;
