@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import EventsArea from "@/components/EventsArea";
 import ThisYearParticipation from "../components/ThisYearParticipation";
+import ThisMonthParticipation from "../components/ThisMonthParticipation";
 import { Button } from "@headlessui/react";
 import Link from "next/link";
 
@@ -28,7 +29,7 @@ export default function Home() {
           <div className="border">今年の総支出</div>
         </div>
         <div>
-          <div className="border">今月の参戦数</div>
+        <ThisMonthParticipation />
         </div>
         <div>
           <div className="border">今月の支出</div>

@@ -31,9 +31,9 @@ const ThisYearParticipation = () => {
     }, [events]);
 
   return (
-    <div className="flex flex-col border border-green-500 rounded-xl">
-      <div className="font-bold text-lg text-green-500">今年の参戦数</div>
-      <div className="self-center font-extrabold text-2xl text-green-600">
+    <div className="flex flex-col border border-green-500 rounded-xl px-[2em] pt-[1em] pb-[4em]">
+      <div className="font-bold text-lg text-green-500 pb-[1em]">今年の参戦数</div>
+      <div className="self-center font-extrabold text-3xl text-green-600">
         {`${counts}回`}
       </div>
       
