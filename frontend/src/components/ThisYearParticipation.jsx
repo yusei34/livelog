@@ -12,6 +12,12 @@ const ThisYearParticipation = () => {
         (event) => new Date(event.event_date).getFullYear() === year
       ).length;
     };
+
+    const filterEvents = async(events, date) => {
+        return events.filter(
+            (event) => new Date(event.event_date) >= date
+        )
+    }
   
     // イベントを取得
     useEffect(() => {

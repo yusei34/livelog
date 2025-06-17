@@ -21,18 +21,18 @@ export default function Home() {
           <EventsArea />
         </div>
           
-        <div>
+        <div className="col-span-2">
         <ThisYearParticipation /> 
         </div>
 
-        <div>
-          <div className="border">今年の総支出</div>
+        <div className="col-span-2">
+          <div className="border h-42 rounded-xl">今年の総支出</div>
         </div>
-        <div>
+        <div className="col-span-2">
         <ThisMonthParticipation />
         </div>
-        <div>
-          <div className="border">今月の支出</div>
+        <div className="col-span-2">
+          <div className="border  h-42 rounded-xl">今月の支出</div>
         </div>
 
        
