@@ -7,14 +7,22 @@ import {
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
-import { fetchEvents } from "@/lib/api/fetchEvents";
+import { fetchAllEvents } from "@/lib/api/fetchEvents";
 
 const EventsArea = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetchEvents(0, 4).then(setEvents);
+    fetchAllEvents().then((data) => {
+      const now = new Date();
+      const filtered = data
+        .filter(event => new Date(event.event_date) >= now)
+        .sort((a, b) => new Date(a.event_date) - new Date(b.event_date))
+        .slice(0, 4);
+      setEvents(filtered);
+    });
   }, []);
+
 
   return (
     <>
