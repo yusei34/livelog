@@ -1,10 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Ticket,
-  ChevronRight
-} from "lucide-react";
+import { Ticket, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import { fetchAllEvents } from "@/lib/api/fetchEvents";
@@ -16,18 +13,17 @@ const EventsArea = () => {
     fetchAllEvents().then((data) => {
       const now = new Date();
       const filtered = data
-        .filter(event => new Date(event.event_date) >= now)
+        .filter((event) => new Date(event.event_date) >= now)
         .sort((a, b) => new Date(a.event_date) - new Date(b.event_date))
         .slice(0, 4);
       setEvents(filtered);
     });
   }, []);
 
-
   return (
     <>
       <div className="flex flex-col justify-between border  border-green-500 rounded-2xl">
-        <div className="" >
+        <div className="">
           <div className="flex justify-between items-center px-8 pt-3 pb-1.5">
             <div className="text-green-500 flex justify-center text-xl font-bold text-primary m-2 ">
               <Ticket className="mr-2 h-7 w-7" />
@@ -50,7 +46,11 @@ const EventsArea = () => {
             {events.length === 0 ? (
               <p>イベントがありません</p>
             ) : (
-              events.map((event) => <EventCard key={event.id} event={event} />)
+              events.map((event) => (
+                <Link href={`/events/${event.id}`}>
+                  <EventCard key={event.id} event={event} />
+                </Link>
+              ))
             )}
           </div>
         </div>
