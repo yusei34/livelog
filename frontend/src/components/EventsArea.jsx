@@ -46,11 +46,7 @@ const EventsArea = () => {
             {events.length === 0 ? (
               <p>イベントがありません</p>
             ) : (
-              events.map((event) => (
-                <Link href={`/events/${event.id}`}>
-                  <EventCard key={event.id} event={event} />
-                </Link>
-              ))
+              events.map((event) => <EventCard key={event.id} event={event} />)
             )}
           </div>
         </div>
