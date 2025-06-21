@@ -6,7 +6,6 @@ import { fetchEvents } from "@/lib/api/fetchEvents";
 import Link from "next/link";
 
 import EventListItem from "@/components/EventListItem";
-import Header from "@/components/Header";
 import SearchBar from "../../components/SearchBar";
 import Filter from "../../components/Filter";
 
@@ -20,7 +19,6 @@ export default function EventsPage() {
 
   return (
     <>
-      <Header />
       <div className="p-4 m-8 space-y-6">
         <h1 className="text-2xl font-bold">ライブ一覧</h1>
 
