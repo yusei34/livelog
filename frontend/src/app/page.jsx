@@ -8,8 +8,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <Header />
-
       <main className="grid grid-cols-4 gap-4 border m-8 p-6">
         <div className="col-span-4 flex justify-end m-2 p-2 ">
           <Button className=" bg-green-600 text-white font-bold px-4 py-2 rounded-xl hover:shadow-lg">
@@ -20,23 +18,20 @@ export default function Home() {
         <div className="col-span-4">
           <EventsArea />
         </div>
-          
+
         <div className="col-span-2">
-        <ThisYearParticipation /> 
+          <ThisYearParticipation />
         </div>
 
         <div className="col-span-2">
           <div className="border h-42 rounded-xl">今年の総支出</div>
         </div>
         <div className="col-span-2">
-        <ThisMonthParticipation />
+          <ThisMonthParticipation />
         </div>
         <div className="col-span-2">
           <div className="border  h-42 rounded-xl">今月の支出</div>
         </div>
-
-       
-
       </main>
     </>
   );
