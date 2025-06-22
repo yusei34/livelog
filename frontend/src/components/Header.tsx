@@ -10,7 +10,7 @@ export default function Header() {
   const currentPath = usePathname();
 
   return (
-    <header className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white">
+    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white">
       <div className=" flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="p-1.5">
