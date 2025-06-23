@@ -2,7 +2,7 @@
 
 import { Dialog, DialogPanel, DialogTitle,Button } from "@headlessui/react";
 import { useState } from "react";
-import EventFormPage from "../app/events/form/page";
+import EventFormPage from "../../app/events/form/page";
 
 
 export default function EventFormModal() {
