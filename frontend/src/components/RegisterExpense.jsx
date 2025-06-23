@@ -82,23 +82,24 @@ const RegisterExpense = ({ eventId }) => {
                           )}
                         >
                           {selected.name}
-                          {/* <ChevronDown
+                          <ChevronDown
                             className="group pointer-events-none absolute top-2.5 right-2.5 size-4 "
                             aria-hidden="true"
-                          /> */}
+                          />
                         </ListboxButton>
                         <ListboxOptions
                           transition
                           className={clsx(
-                            "w-(--button-width) rounded-xl shadow-xl border-black/10 bg-white-500 p-1 [--anchor-gap:--spacing(1)] focus:outline-none",
-                            "transition duration-100 ease-in data-leave:data-closed:opacity-0"
+                            "absolute w-(--button-width) rounded-xl shadow-xl border-black/10  bg-white-500 p-1 [--anchor-gap:--spacing(1)] focus:outline-none",
+                            "overflow-y-auto transition duration-100 ease-in data-leave:data-closed:opacity-0"
                           )}
                         >
                           {categories.map((category) => (
                             <ListboxOption
+                            anchor="bottom"
                               key={category.id}
                               value={category}
-                              className="group flex cursor-default items-center  rounded-lg px-3 py-1.5 select-none data-focus:bg-green-200"
+                              className="group flex bg-white cursor-default items-center  rounded-lg px-3 py-1.5 select-none data-focus:bg-green-200"
                             >
                               <div className="text-sm/6 text-black">{category.name}</div>
                             </ListboxOption>
