@@ -42,13 +42,11 @@ const SearchBar = () => {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      // wrapperRefの外側をクリックした場合のみsetOpen(false)
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    // クリーンアップ（イベントリスナ解除）
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

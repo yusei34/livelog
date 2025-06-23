@@ -3,6 +3,8 @@
 import React, { use, useEffect, useState } from "react";
 import { fetchEventById } from "@/lib/api/fetchEvents";
 import { dateFormat } from "@/lib/utils";
+import RegisterExpense from '@/components/RegisterExpense';
+import OpenModalButton from '@/components/old/OpenModalButton';
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -11,7 +13,8 @@ import {
   Guitar,
   Music,
   Wallet,
-  Edit
+  Edit,
+  PlusCircle
 } from "lucide-react";
 import { Button } from "@headlessui/react";
 import {
@@ -174,15 +177,7 @@ const EventDetailPage = ({ params }) => {
                         )}
                       </CardDescription>
                     </div>
-                    {/*  <ExpenseRegistrationDialog eventId={event.id}>
-                    <CustomButton
-                      size="sm"
-                      className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      費用登録
-                    </CustomButton>
-                  </ExpenseRegistrationDialog>*/}
+                     <RegisterExpense eventId={event.id}/>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -210,48 +205,10 @@ const EventDetailPage = ({ params }) => {
                       ))
                     )}
                   </div>
-
-                  {/* Expense Summary */}
-                  {/* <div className="mt-6 pt-4 border-t border-green-200">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <span>平均支出</span>
-                      <span>
-                        ¥
-                        {Math.round(
-                          totalExpense / event.expenses.length
-                        ).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <span>最大支出</span>
-                      <span>
-                        ¥
-                        {Math.max(
-                          ...event.expenses.map((e) => e.amount)
-                        ).toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div> */}
                 </CardContent>
               </Card>
             </div>
 
-            {/* <div className="col-span-1 bg-green-100 h-[10em] w-auto px-5 border border-green-300 rounded-xl">
-            <div className="flex justify-between items-center p-4 pt-2">
-              <div className="text-3xl font-semibold">費用</div>
-            </div>
-            {event.expenses.length === 0 ? (
-              <p>なし</p>
-            ) : (
-              <ul className="list-disc list-inside">
-                {event.expenses.map((expense) => (
-                  <li key={expense.id}>{expense.name}</li>
-                ))}
-              </ul>
-            )}
-          </div> */}
           </div>
         </main>
       </div>

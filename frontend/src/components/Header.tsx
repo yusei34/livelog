@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link"
+import Image from "next/image";
 import { Music, User, Calendar, Home } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
@@ -10,14 +11,14 @@ export default function Header() {
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white">
+    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3">
       <div className=" flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="p-1.5">
-            {/* <img src="/Gig log.svg" alt="logo" className="h-30 w-auto"/> */}
+              <Image src="/Gig log.svg" alt="logo" width={150} height={200} className="p-3"/>
             {/* <Music className="w-6 h-6 text-primary" /> */}
           </div>
-          <span className="text-2xl font-bold tracking-tight">GIGLog</span>
+          {/* <span className="text-2xl font-bold tracking-tight">GIGLog</span> */}
         </Link>
 
         <nav className="flex border-green-700 gap-4">
