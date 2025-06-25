@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 // import { Button } from '@/components/Button';
-import { ChevronDown, PlusCircle } from "lucide-react";
+import { ChevronDown, PlusCircle, X  } from "lucide-react";
 import {
   Button,
   Dialog,
@@ -61,7 +61,12 @@ const RegisterExpense = ({ eventId }) => {
               transition
               className="w-full max-w-md p-6 bg-white rounded-2xl shadow-xl space-y-4"
             >
-              <DialogTitle className="text-xl font-bold">費用登録</DialogTitle>
+                <div className="flex justify-between items-center">
+                <DialogTitle className="text-xl font-bold">費用登録</DialogTitle>
+                <Button onClick={close}
+                className="rounded-sm hover:opacity-70 hover:bg-gray-300"><X className=""/></Button>
+                </div>
+              
               <Description className="text-sm text-black/60">
                 ライブに関する支出を登録してください
               </Description>
@@ -77,13 +82,13 @@ const RegisterExpense = ({ eventId }) => {
                       >
                         <ListboxButton
                           className={clsx(
-                            "relative block w-full rounded-lg bg-white py-1.5 pr-8 pl-3 text-left text-sm/6 border",
-                            "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
+                            "relative block w-full rounded-lg bg-white py-1.5 pr-8 pl-3 text-left text-sm/6 border data-focus:border data-focus:border-emerald-300",
+                            "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 "
                           )}
                         >
                           {selected.name}
                           <ChevronDown
-                            className="group pointer-events-none absolute top-2.5 right-2.5 size-4 "
+                            className="group pointer-events-none absolute top-2.5 right-2.5 size-4"
                             aria-hidden="true"
                           />
                         </ListboxButton>
@@ -109,6 +114,16 @@ const RegisterExpense = ({ eventId }) => {
                     </div>
                   </Field>
                   <Field>
+                    <Label className="text-sm/6 font-medium ">Item Name</Label>
+                    <Input
+                      type="text"
+                      className={clsx(
+                        "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
+                        "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
+                      )}
+                    />
+                  </Field>
+                  <Field>
                     <Label className="text-sm/6 font-medium ">Amount</Label>
                     <Input
                       type="number"
@@ -118,16 +133,7 @@ const RegisterExpense = ({ eventId }) => {
                       )}
                     />
                   </Field>
-                  <Field>
-                    <Label className="text-sm/6 font-medium ">Note</Label>
-                    <Input
-                      type="number"
-                      className={clsx(
-                        "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
-                        "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
-                      )}
-                    />
-                  </Field>
+                  
                 </Fieldset>
               </div>
               <div className="justify-self-end p-2">
