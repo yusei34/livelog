@@ -177,7 +177,7 @@ const EventDetailPage = ({ params }) => {
                         )}
                       </CardDescription>
                     </div>
-                     <RegisterExpense eventId={event.id}/>
+                     <RegisterExpense event_id={event.id}/>
                   </div>
                 </CardHeader>
                 <CardContent>

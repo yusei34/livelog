@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { postExpense } from "../lib/api/postExpense";
 import clsx from "clsx";
-// import { Button } from '@/components/Button';
-import { ChevronDown, PlusCircle, X  } from "lucide-react";
+import { ChevronDown, PlusCircle, X } from "lucide-react";
 import {
   Button,
   Dialog,
@@ -33,9 +33,12 @@ const categories = [
   { id: 6, name: "その他" }
 ];
 
-const RegisterExpense = ({ eventId }) => {
+const RegisterExpense = ({ event_id }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(categories[0]);
+  const [category, setCategory] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [amount, setAmount] = useState("");
 
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
@@ -61,25 +64,32 @@ const RegisterExpense = ({ eventId }) => {
               transition
               className="w-full max-w-md p-6 bg-white rounded-2xl shadow-xl space-y-4"
             >
-                <div className="flex justify-between items-center">
-                <DialogTitle className="text-xl font-bold">費用登録</DialogTitle>
-                <Button onClick={close}
-                className="rounded-sm hover:opacity-70 hover:bg-gray-300"><X className=""/></Button>
-                </div>
-              
+              <div className="flex justify-between items-center">
+                <DialogTitle className="text-xl font-bold">
+                  費用登録
+                </DialogTitle>
+                <Button
+                  onClick={close}
+                  className="rounded-sm hover:opacity-70 hover:bg-gray-300"
+                >
+                  <X className="" />
+                </Button>
+              </div>
+
               <Description className="text-sm text-black/60">
                 ライブに関する支出を登録してください
               </Description>
               <div className="w-full max-w-lg px-4">
-                <Fieldset className="space-y-4 rounded-xl bg-white">
+                <Fieldset onSubmit={postExpense(
+                        category,
+                        itemName,
+                        amount,
+                        event_id
+                      )} className="space-y-4 rounded-xl bg-white">
                   <Field>
                     <Label className="text-sm/6 font-medium ">Category</Label>
                     <div className="mx-auto">
-                      <Listbox
-                        value={selected}
-                        onChange={setSelected}
-                        by='id'
-                      >
+                      <Listbox value={selected} onChange={setSelected} by="id">
                         <ListboxButton
                           className={clsx(
                             "relative block w-full rounded-lg bg-white py-1.5 pr-8 pl-3 text-left text-sm/6 border data-focus:border data-focus:border-emerald-300",
@@ -101,12 +111,15 @@ const RegisterExpense = ({ eventId }) => {
                         >
                           {categories.map((category) => (
                             <ListboxOption
-                            anchor="bottom"
+                              anchor="bottom"
                               key={category.id}
                               value={category}
+                              onChange={(e) => setCategory(e.target.value)}
                               className="group flex bg-white cursor-default items-center  rounded-lg px-3 py-1.5 select-none data-focus:bg-green-200"
                             >
-                              <div className="text-sm/6 text-black">{category.name}</div>
+                              <div className="text-sm/6 text-black">
+                                {category.name}
+                              </div>
                             </ListboxOption>
                           ))}
                         </ListboxOptions>
@@ -117,6 +130,7 @@ const RegisterExpense = ({ eventId }) => {
                     <Label className="text-sm/6 font-medium ">Item Name</Label>
                     <Input
                       type="text"
+                      onChange={(e) => setItemName(e.target.value)}
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
                         "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
@@ -127,19 +141,21 @@ const RegisterExpense = ({ eventId }) => {
                     <Label className="text-sm/6 font-medium ">Amount</Label>
                     <Input
                       type="number"
+                      onChange={(e) => setAmount(e.target.value)}
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
                         "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
                       )}
                     />
                   </Field>
-                  
+                  <div className="justify-self-end p-2">
+                    <Button
+                      className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 "
+                    >
+                      登録する
+                    </Button>
+                  </div>
                 </Fieldset>
-              </div>
-              <div className="justify-self-end p-2">
-                <Button className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 ">
-                  登録する
-                </Button>
               </div>
             </DialogPanel>
           </div>
