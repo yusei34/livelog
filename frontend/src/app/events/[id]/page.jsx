@@ -33,7 +33,7 @@ const EventDetailPage = ({ params }) => {
 
   useEffect(() => {
     fetchEventById(id).then(setEvent);
-  }, [id]);
+  }, [id,event]);
 
   useEffect(() => {
     const format = async () => {

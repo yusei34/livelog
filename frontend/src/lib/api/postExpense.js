@@ -4,10 +4,10 @@ import axios from 'axios';
 export async function postExpense(category, item_name, amount, event_id) {
     try {
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/expenses`,{
-            "category":category,
-            "event_id":event_id,
-            "amount":amount,
-            "event_id":event_id
+            category,
+            item_name,
+            amount,
+            event_id
         });
         return { success : true };
     } catch (error) {
