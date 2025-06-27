@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { postExpense } from "../lib/api/postExpense";
+import { toast } from "sonner";
 import clsx from "clsx";
 import { ChevronDown, PlusCircle, X } from "lucide-react";
 import {
@@ -12,12 +14,8 @@ import {
   Description,
   DialogBackdrop,
   Field,
-  Fieldset,
   Input,
   Label,
-  Legend,
-  Select,
-  Textarea,
   Listbox,
   ListboxButton,
   ListboxOption,
@@ -34,14 +32,28 @@ const categories = [
 ];
 
 const RegisterExpense = ({ event_id }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(categories[0]);
-  const [category, setCategory] = useState("");
   const [itemName, setItemName] = useState("");
   const [amount, setAmount] = useState("");
 
+  //   開閉制御用の関数
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
+
+  // submit用のハンドラ
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await postExpense(selected.name, itemName, amount, event_id);
+      close();
+      toast.success("登録完了");
+      
+    } catch (err) {
+      toast.error("登録に失敗しました");
+    }
+  };
 
   return (
     <>
@@ -80,12 +92,10 @@ const RegisterExpense = ({ event_id }) => {
                 ライブに関する支出を登録してください
               </Description>
               <div className="w-full max-w-lg px-4">
-                <Fieldset onSubmit={postExpense(
-                        category,
-                        itemName,
-                        amount,
-                        event_id
-                      )} className="space-y-4 rounded-xl bg-white">
+                <form
+                  onSubmit={handleSubmit}
+                  className="w-full space-y-4 rounded-xl bg-white"
+                >
                   <Field>
                     <Label className="text-sm/6 font-medium ">Category</Label>
                     <div className="mx-auto">
@@ -114,7 +124,6 @@ const RegisterExpense = ({ event_id }) => {
                               anchor="bottom"
                               key={category.id}
                               value={category}
-                              onChange={(e) => setCategory(e.target.value)}
                               className="group flex bg-white cursor-default items-center  rounded-lg px-3 py-1.5 select-none data-focus:bg-green-200"
                             >
                               <div className="text-sm/6 text-black">
@@ -150,12 +159,13 @@ const RegisterExpense = ({ event_id }) => {
                   </Field>
                   <div className="justify-self-end p-2">
                     <Button
+                      type="submit"
                       className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 "
                     >
                       登録する
                     </Button>
                   </div>
-                </Fieldset>
+                </form>
               </div>
             </DialogPanel>
           </div>
@@ -163,85 +173,5 @@ const RegisterExpense = ({ event_id }) => {
       </Dialog>
     </>
   );
-  //   const [isOpen, setIsOpen] = useState(false);
-  //   const [category, setCategory] = useState("");
-  //   const [amount, setAmount] = useState("");
-  //   const [note, setNote] = useState("");
-
-  //   const open = () => setIsOpen(true);
-  //   const close = () => setIsOpen(false);
-
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     // バリデーションやAPI送信処理をここに
-  //     // eventIdも使える
-  //     setIsOpen(false); // 登録後にダイアログを閉じる
-  //   };
-
-  //   return (
-  //     <>
-  //       <Button
-  //         onClick={open}
-  //         className="w-5% bg-blue-600 text-white px-4 py-2 rounded-2xl "
-  //       >
-  //         + 新規イベント
-  //       </Button>
-
-  //       <Dialog open={isOpen} onClose={close}>
-  //         <DialogPanel className="sm:max-w-[425px]">
-  //           <form onSubmit={handleSubmit}>
-  //             <div>
-  //               <DialogTitle>費用登録</DialogTitle>
-  //               <p>イベントに関連する支出を登録してください。</p>
-  //             </div>
-  //             <div className="grid gap-4 py-4">
-  //               <div className="grid gap-2">
-  //                 <label htmlFor="category">カテゴリ</label>
-  //                 <select
-  //                   id="category"
-  //                   value={category}
-  //                   onChange={(e) => setCategory(e.target.value)}
-  //                   className="border rounded px-2 py-1"
-  //                   required
-  //                 >
-  //                   <option value="">カテゴリを選択</option>
-  //                   <option value="ticket">チケット</option>
-  //                   <option value="transportation">交通費</option>
-  //                   <option value="merchandise">グッズ</option>
-  //                   <option value="food">食事</option>
-  //                   <option value="accommodation">宿泊費</option>
-  //                   <option value="other">その他</option>
-  //                 </select>
-  //               </div>
-  //               <div className="grid gap-2">
-  //                 <label htmlFor="amount">金額</label>
-  //                 <Input
-  //                   id="amount"
-  //                   type="number"
-  //                   placeholder="10000"
-  //                   value={amount}
-  //                   onChange={(e) => setAmount(e.target.value)}
-  //                   required
-  //                 />
-  //               </div>
-  //               <div className="grid gap-2">
-  //                 <label htmlFor="note">メモ (任意)</label>
-  //                 <Input
-  //                   id="note"
-  //                   placeholder="メモを入力"
-  //                   value={note}
-  //                   onChange={(e) => setNote(e.target.value)}
-  //                 />
-  //               </div>
-  //             </div>
-  //             <div>
-  //               <Button type="submit">登録する</Button>
-  //             </div>
-  //           </form>
-  //         </DialogPanel>
-  //       </Dialog>
-  //     </>
-  //   );
 };
-
 export default RegisterExpense;
