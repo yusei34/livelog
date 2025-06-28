@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchActors } from '@/lib/api/fetchActors';
+import RegisterEvent from '../../../components/RegisterEvent';
 
 export default function ActorSelectPage() {
   const [query, setQuery] = useState('');

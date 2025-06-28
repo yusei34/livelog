@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import RegisterEvent from "../components/RegisterEvent";
 import EventsArea from "@/components/EventsArea";
 import ThisYearParticipation from "../components/ThisYearParticipation";
 import ThisMonthParticipation from "../components/ThisMonthParticipation";
@@ -13,6 +13,8 @@ export default function Home() {
           <Button className=" bg-green-600 text-white font-bold px-4 py-2 rounded-xl hover:shadow-lg">
             <Link href="events/form/">新規イベント登録</Link>
           </Button>
+          
+          <RegisterEvent />
         </div>
 
         <div className="col-span-4">
