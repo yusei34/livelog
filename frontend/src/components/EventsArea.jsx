@@ -4,6 +4,14 @@ import Link from "next/link";
 import { Ticket, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter
+} from "@/components/DetailCard";
 import { fetchAllEvents } from "@/lib/api/fetchEvents";
 
 const EventsArea = () => {

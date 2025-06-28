@@ -16,7 +16,6 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-2">
           <div className="p-1.5">
               <Image src="/Gig log.svg" alt="logo" width={150} height={200} className="p-3"/>
-            {/* <Music className="w-6 h-6 text-primary" /> */}
           </div>
           {/* <span className="text-2xl font-bold tracking-tight">GIGLog</span> */}
         </Link>
