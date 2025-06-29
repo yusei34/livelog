@@ -41,6 +41,7 @@ def read_events(
     events = session.exec(result.offset(skip).limit(limit)).all()
     return EventsPublic(data=events)
 
+
 @router.get('/{event_id}', response_model= EventRead)
 def read_event(
     *, session:SessionDep, event_id: uuid.UUID, 

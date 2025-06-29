@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Ticket, ChevronRight } from "lucide-react";
+import { Ticket, ChevronRight, JapaneseYen } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import {
@@ -12,10 +12,15 @@ import {
   CardContent,
   CardFooter
 } from "@/components/DetailCard";
-import { fetchAllEvents } from "@/lib/api/fetchEvents";
+import { fetchAllEvents, fetchEventById } from "@/lib/api/fetchEvents";
 
 const EventsArea = () => {
   const [events, setEvents] = useState([]);
+
+  // const getActors = async (id) =>{
+  //   const res = fetchEventById(id);
+  //   return res;
+  // } 
 
   useEffect(() => {
     fetchAllEvents().then((data) => {
@@ -28,15 +33,22 @@ const EventsArea = () => {
     });
   }, []);
 
+  
+    
+
   return (
     <>
-      <div className="flex flex-col justify-between border  border-green-500 rounded-2xl">
-        <div className="">
-          <div className="flex justify-between items-center px-8 pt-3 pb-1.5">
-            <div className="text-green-500 flex justify-center text-xl font-bold text-primary m-2 ">
-              <Ticket className="mr-2 h-7 w-7" />
-              参加予定ライブ
-            </div>
+      <div className="flex flex-col justify-between">
+          <div className="flex justify-between items-center px-8  pb-1.5">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent flex items-center gap-3">
+                  <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl text-white">
+                    <Ticket className="h-6 w-6" />
+                  </div>
+                  参加予定ライブ
+                </h2>
+                <p className="text-gray-600">直近の参加予定イベント</p>
+              </div>
             <Link
               href="/events"
               className="flex justify-center hover:bg-green-50"
@@ -58,7 +70,6 @@ const EventsArea = () => {
             )}
           </div>
         </div>
-      </div>
     </>
   );
 };

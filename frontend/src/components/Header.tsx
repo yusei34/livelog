@@ -7,11 +7,10 @@ import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 
 export default function Header() {
-  // In a real app, you would determine the active route dynamically
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3">
+    <header className="shadow-xl sticky top-0 z-50 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3">
       <div className=" flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="p-1.5">
