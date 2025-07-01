@@ -21,37 +21,41 @@ import {
   Target,
   Award
 } from "lucide-react";
-import { fetchAllEvents } from "@/lib/api/fetchEvents";
+import { fetchAllEvents } from "../lib/api/fetchEvents";
+import { fetchAllExpenses } from "@/lib/api/fetchExpense";
 
-const ThisMonthParticipation = () => {
-  const [thisCounts, setThisCount] = useState(0);
-  const [lastCounts, setLastCount] = useState(0);
+const ThisMonthExpenses = () => {
   const [events, setEvents] = useState([]);
-
-  const countThisMonthEvent = async (events, month) => {
-    return events.filter(
-      (event) => new Date(event.event_date).getMonth() + 1 === month
-    ).length;
-  };
+  const [expenses, setExpenses] = useState([]);
+  const [result, setResult] = useState([]);
+     
 
   // イベントを取得
   useEffect(() => {
     fetchAllEvents().then(setEvents);
   }, []);
 
+  useEffect(()=>{
+    fetchAllExpenses().then(setExpenses);
+  },[])
+  
   // イベントが取得できたらカウント
   useEffect(() => {
     const now = new Date();
-    const countEvents = async () => {
-      const thisCount = await countThisMonthEvent(events, now.getMonth() + 1);
-      setThisCount(thisCount);
-      const lastCount = await countThisMonthEvent(events, now.getMonth());
-      setLastCount(lastCount);
-    };
-    if (events.length > 0) {
-      countEvents();
-    }
-  }, [events]);
+    const thisMonth = now.getMonth() + 1;
+    const thisMonthEvents = events.filter(
+      (event) => new Date(event.event_date).getMonth() + 1 === thisMonth
+    );
+    const thisMonthEventIds = thisMonthEvents.map(event => event.id);
+    const thisMonthExpenses = expenses.filter(expense =>
+      thisMonthEventIds.includes(expense.event_id)
+    );
+    const sumExpenses = thisMonthExpenses.reduce((sum,expense)=>sum + expense.amount,0)
+    setResult(sumExpenses);
+    //   const lastCount = countThisMonthEvent(events, now.getMonth());
+    //   setLastCount(lastCount);
+  
+  }, [events, expenses]);
 
 
   const getMonth = () => {
@@ -60,32 +64,31 @@ const ThisMonthParticipation = () => {
     return thisMonth;
   };
 
-  const eventGrowth = thisCounts - lastCounts;
+  // const eventGrowth = thisCounts - lastCounts;
 
 
 
   return (
     <>
-      <Card className="h-[15em] group relative overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-emerald-50 to-green-100 hover:from-emerald-100 hover:to-green-200">
-        <div className="top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-green-500" />
+      <Card className="h-[15em] group relative overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-orange-50 to-red-100 hover:from-orange-100 hover:to-red-200">
+        <div className="top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-orange-500" />
         <CardContent className="p-6 my-4 mx-2 relative">
           <div className="flex items-start justify-between mb-4">
             <div className="space-y-1">
               <p className="text-sm font-medium text-gray-600">
-                {`今月の参加イベント数<${getMonth()}月>`}
+                {`今月の支出<${getMonth()}月>`}
               </p>
               <div className="flex items-baseline gap-2">
                 <h3 className="text-3xl font-bold text-gray-900">
-                  {thisCounts}
+                  ¥{result.toLocaleString()}
                 </h3>
-                <span className="text-sm text-gray-500">件</span>
               </div>
             </div>
-            <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <CalendarIcon className="h-6 w-6 text-white" />
+            <div className="p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <BarChart3 className="h-6 w-6 text-white" />
             </div>
           </div>
-          <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
+          {/* <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
             <div
               className={`p-1 rounded-full ${
                 eventGrowth >= 0 ? "bg-green-100" : "bg-red-100"
@@ -112,7 +115,7 @@ const ThisMonthParticipation = () => {
                 eventGrowth >= 0 ? "text-green-500" : "text-red-500"
               }`}
             ></span>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </>
@@ -126,4 +129,4 @@ const ThisMonthParticipation = () => {
   );
 };
 
-export default ThisMonthParticipation;
+export default ThisMonthExpenses;
