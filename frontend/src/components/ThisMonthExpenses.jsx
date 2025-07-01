@@ -27,18 +27,18 @@ import { fetchAllExpenses } from "@/lib/api/fetchExpense";
 const ThisMonthExpenses = () => {
   const [events, setEvents] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [result, setResult] = useState([]);
-     
+  const [thisResult, setThisResult] = useState([]);
+  const [lastResult, setLastResult] = useState([]);
 
   // イベントを取得
   useEffect(() => {
     fetchAllEvents().then(setEvents);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchAllExpenses().then(setExpenses);
-  },[])
-  
+  }, []);
+
   // イベントが取得できたらカウント
   useEffect(() => {
     const now = new Date();
@@ -46,27 +46,41 @@ const ThisMonthExpenses = () => {
     const thisMonthEvents = events.filter(
       (event) => new Date(event.event_date).getMonth() + 1 === thisMonth
     );
-    const thisMonthEventIds = thisMonthEvents.map(event => event.id);
-    const thisMonthExpenses = expenses.filter(expense =>
+    const thisMonthEventIds = thisMonthEvents.map((event) => event.id);
+    const thisMonthExpenses = expenses.filter((expense) =>
       thisMonthEventIds.includes(expense.event_id)
     );
-    const sumExpenses = thisMonthExpenses.reduce((sum,expense)=>sum + expense.amount,0)
-    setResult(sumExpenses);
-    //   const lastCount = countThisMonthEvent(events, now.getMonth());
-    //   setLastCount(lastCount);
-  
+    const sumExpenses = thisMonthExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0
+    );
+    setThisResult(sumExpenses);
   }, [events, expenses]);
 
+  useEffect(() => {
+    const now = new Date();
+    const lastMonth = now.getMonth();
+    const lastMonthEvents = events.filter(
+      (event) => new Date(event.event_date).getMonth() + 1 === lastMonth
+    );
+    const lastMonthEventIds = lastMonthEvents.map((event) => event.id);
+    const lastMonthExpenses = expenses.filter((expense) =>
+      lastMonthEventIds.includes(expense.event_id)
+    );
+    const sumExpenses = lastMonthExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0
+    );
+    setLastResult(sumExpenses);
+  }, [events, expenses]);
 
   const getMonth = () => {
     const month = new Date();
-    const thisMonth = month.getMonth()+1;
+    const thisMonth = month.getMonth() + 1;
     return thisMonth;
   };
 
-  // const eventGrowth = thisCounts - lastCounts;
-
-
+  const eventGrowth = thisResult - lastResult;
 
   return (
     <>
@@ -80,7 +94,7 @@ const ThisMonthExpenses = () => {
               </p>
               <div className="flex items-baseline gap-2">
                 <h3 className="text-3xl font-bold text-gray-900">
-                  ¥{result.toLocaleString()}
+                  ¥{thisResult.toLocaleString()}
                 </h3>
               </div>
             </div>
@@ -88,7 +102,7 @@ const ThisMonthExpenses = () => {
               <BarChart3 className="h-6 w-6 text-white" />
             </div>
           </div>
-          {/* <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
+          <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
             <div
               className={`p-1 rounded-full ${
                 eventGrowth >= 0 ? "bg-green-100" : "bg-red-100"
@@ -107,25 +121,17 @@ const ThisMonthExpenses = () => {
                 eventGrowth >= 0 ? "text-green-600" : "text-red-600"
               }`}
             >
-              前月比 {eventGrowth >= 0 ? "+" : ""}
-              {eventGrowth}件
+              前月比 {eventGrowth >= 0 ? "+" : ""}¥{eventGrowth}
             </span>
             <span
               className={`text-xs ${
                 eventGrowth >= 0 ? "text-green-500" : "text-red-500"
               }`}
             ></span>
-          </div> */}
+          </div>
         </CardContent>
       </Card>
     </>
-    // <div className="flex flex-col border border-green-500 rounded-xl px-[2em] pt-[1em] pb-[4em]">
-    //   <div className="font-bold text-lg text-green-500 pb-[1em]">{`${month + 1}月の参戦数`}</div>
-    //   <div className="self-center font-extrabold text-3xl text-green-600">
-    //     {`${counts}回`}
-    //   </div>
-
-    // </div>
   );
 };
 
