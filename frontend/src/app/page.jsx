@@ -2,6 +2,7 @@ import RegisterEvent from "../components/RegisterEvent";
 import EventsArea from "@/components/EventsArea";
 import ThisYearParticipation from "../components/ThisYearParticipation";
 import ThisMonthParticipation from "../components/ThisMonthParticipation";
+import ThisMonthExpenses from "../components/ThisMonthExpenses";
 import { Button } from "@headlessui/react";
 import Link from "next/link";
 
@@ -28,12 +29,12 @@ export default function Home() {
           <div className="">
             <ThisMonthParticipation />
           </div>
-          
+
           <div className="">
             <div className="border h-42 rounded-xl">今年の総支出</div>
           </div>
           <div className="">
-            <div className="border  h-42 rounded-xl">今月の支出</div>
+           <ThisMonthExpenses />
           </div>
         </div>
       </main>
