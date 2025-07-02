@@ -11,15 +11,7 @@ import {
 } from "@/components/DetailCard";
 import {
   CalendarIcon,
-  Music,
-  Ticket,
-  BarChart3,
-  ChevronRight,
   TrendingUp,
-  DollarSign,
-  Sparkles,
-  Target,
-  Award
 } from "lucide-react";
 import { fetchAllEvents } from "@/lib/api/fetchEvents";
 
@@ -72,7 +64,10 @@ const ThisMonthParticipation = () => {
           <div className="flex items-start justify-between mb-4">
             <div className="space-y-1">
               <p className="text-sm font-medium text-gray-600">
-                {`今月の参加イベント数<${getMonth()}月>`}
+                今月の参加イベント数
+              </p>
+              <p className="text-sm font-medium text-gray-600">
+                {`<${getMonth()}月>`}
               </p>
               <div className="flex items-baseline gap-2">
                 <h3 className="text-3xl font-bold text-gray-900">
@@ -116,13 +111,6 @@ const ThisMonthParticipation = () => {
         </CardContent>
       </Card>
     </>
-    // <div className="flex flex-col border border-green-500 rounded-xl px-[2em] pt-[1em] pb-[4em]">
-    //   <div className="font-bold text-lg text-green-500 pb-[1em]">{`${month + 1}月の参戦数`}</div>
-    //   <div className="self-center font-extrabold text-3xl text-green-600">
-    //     {`${counts}回`}
-    //   </div>
-
-    // </div>
   );
 };
 

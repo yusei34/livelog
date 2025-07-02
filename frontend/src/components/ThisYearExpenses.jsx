@@ -10,16 +10,8 @@ import {
   CardFooter
 } from "@/components/DetailCard";
 import {
-  CalendarIcon,
-  Music,
-  Ticket,
   BarChart3,
-  ChevronRight,
   TrendingUp,
-  DollarSign,
-  Sparkles,
-  Target,
-  Award
 } from "lucide-react";
 import { fetchAllEvents } from "@/lib/api/fetchEvents";
 import { fetchAllExpenses } from "@/lib/api/fetchExpense";
@@ -90,7 +82,10 @@ const ThisYearExpenses = () => {
           <div className="flex items-start justify-between mb-4">
             <div className="space-y-1">
               <p className="text-sm font-medium text-gray-600">
-                {`今年の支出<${getYear()}年>`}
+                今年の支出
+              </p>
+              <p className="text-sm font-medium text-gray-600">
+                {`<${getYear()}年>`}
               </p>
               <div className="flex items-baseline gap-2">
                 <h3 className="text-3xl font-bold text-gray-900">

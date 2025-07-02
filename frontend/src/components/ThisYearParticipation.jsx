@@ -11,15 +11,7 @@ import {
 } from "@/components/DetailCard";
 import {
   CalendarIcon,
-  Music,
-  Ticket,
-  BarChart3,
-  ChevronRight,
   TrendingUp,
-  DollarSign,
-  Sparkles,
-  Target,
-  Award
 } from "lucide-react";
 import { fetchAllEvents } from "@/lib/api/fetchEvents";
 
@@ -69,7 +61,10 @@ const ThisYearParticipation = () => {
           <div className="flex items-start justify-between mb-4">
             <div className="space-y-1">
               <p className="text-sm font-medium text-gray-600">
-                {`今年の参加イベント数<${getYear()}年>`}
+                {`今年の参加イベント数`}
+              </p>
+              <p className="text-sm font-medium text-gray-600">
+                {`<${getYear()}>`}
               </p>
               <div className="flex items-baseline gap-2">
                 <h3 className="text-3xl font-bold text-gray-900">
