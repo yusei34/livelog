@@ -16,7 +16,7 @@ def create_expense(session: SessionDep, expense: ExpenseCreate) ->Any:
     return db_expense
 
 @router.get('/', response_model=list[ExpensePublic])
-def read_expenses(session: SessionDep, offset: int = 0, limit: int = Query(default=20, le=20)):
+def read_expenses(session: SessionDep, offset: int = 0, limit: int = Query(default=20, le=100)):
     expense = session.exec(select(Expense).offset(offset).limit(limit)).all()
     return expense
 
