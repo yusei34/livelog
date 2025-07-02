@@ -9,18 +9,7 @@ import {
   CardContent,
   CardFooter
 } from "@/components/DetailCard";
-import {
-  CalendarIcon,
-  Music,
-  Ticket,
-  BarChart3,
-  ChevronRight,
-  TrendingUp,
-  DollarSign,
-  Sparkles,
-  Target,
-  Award
-} from "lucide-react";
+import { BarChart3, TrendingUp } from "lucide-react";
 import { fetchAllEvents } from "../lib/api/fetchEvents";
 import { fetchAllExpenses } from "@/lib/api/fetchExpense";
 
@@ -89,8 +78,9 @@ const ThisMonthExpenses = () => {
         <CardContent className="p-6 my-4 mx-2 relative">
           <div className="flex items-start justify-between mb-4">
             <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-600">今月の支出</p>
               <p className="text-sm font-medium text-gray-600">
-                {`今月の支出<${getMonth()}月>`}
+                {`<${getMonth()}月>`}
               </p>
               <div className="flex items-baseline gap-2">
                 <h3 className="text-3xl font-bold text-gray-900">
