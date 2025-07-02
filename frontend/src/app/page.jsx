@@ -1,9 +1,8 @@
 import RegisterEvent from "../components/RegisterEvent";
 import EventsArea from "@/components/EventsArea";
-import ThisYearParticipation from "../components/ThisYearParticipation";
-import ThisMonthParticipation from "../components/ThisMonthParticipation";
-import ThisMonthExpenses from "../components/ThisMonthExpenses";
+import DashBoardArea from "../components/DashBoardArea";
 import { Button } from "@headlessui/react";
+
 import Link from "next/link";
 
 export default function Home() {
@@ -17,26 +16,14 @@ export default function Home() {
 
           <RegisterEvent />
         </div>
-
         <div className="col-span-4">
           <EventsArea />
         </div>
-        <div className="col-span-4 h-[15em] grid grid-cols-4 gap-6 items-center  px-8  pb-1.5">
-          <div className="">
-            <ThisYearParticipation />
-          </div>
-
-          <div className="">
-            <ThisMonthParticipation />
-          </div>
-
-          <div className="">
-            <div className="border h-42 rounded-xl">今年の総支出</div>
-          </div>
-          <div className="">
-           <ThisMonthExpenses />
-          </div>
+        <div className="col-span-4">
+          <DashBoardArea />
         </div>
+
+        
       </main>
     </>
   );
