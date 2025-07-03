@@ -5,7 +5,6 @@ artistSelectPageから選択完了を押した時の遷移先として
 RegisterEventコンポーネントをレンダリングするように実装を修正する
 */
 
-
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -83,6 +82,11 @@ const RegisterEvent = ({}) => {
     }
   }, [searchParams]);
 
+  const handleActorSelect = () => {
+    close(); // モーダルを閉じてから遷移
+    router.push("/actors/select/");
+  };
+
   const handleRemoveActor = (index) => {
     setActorIds((prev) => prev.filter((_, i) => i !== index));
     setActorNames((prev) => prev.filter((_, i) => i !== index));
@@ -105,6 +109,13 @@ const RegisterEvent = ({}) => {
       localStorage.removeItem("eventForm.title");
       localStorage.removeItem("eventForm.venue");
       localStorage.removeItem("eventForm.date");
+      setTitle("");
+      setVenue("");
+      setEventDate("");
+      setActorIds([]);
+      setActorNames([]);
+
+      close();
 
       router.push("/events");
     } catch (err) {
@@ -170,7 +181,9 @@ const RegisterEvent = ({}) => {
                     <Label className="text-sm/6 font-medium ">title</Label>
                     <Input
                       type="text"
+                      value={title}
                       onChange={(e) => setTitle(e.target.value)}
+                      required
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
                         "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
@@ -181,7 +194,9 @@ const RegisterEvent = ({}) => {
                     <Label className="text-sm/6 font-medium ">Venue</Label>
                     <Input
                       type="text"
+                      value={venue}
                       onChange={(e) => setVenue(e.target.value)}
+                      required
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
                         "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
@@ -192,7 +207,9 @@ const RegisterEvent = ({}) => {
                     <Label className="text-sm/6 font-medium ">Date</Label>
                     <Input
                       type="date"
+                      value={eventDate}
                       onChange={(e) => setEventDate(e.target.value)}
+                      required
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
                         "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-emerald-300"
@@ -205,13 +222,12 @@ const RegisterEvent = ({}) => {
                       出演アーティスト
                     </label>
                     <div>
-                      <Button className="rounded bg-sky-600 px-4 py-2 text-sm text-white data-active:bg-sky-700 data-hover:bg-sky-500">
-                        <Link
-                          href="/actors/select/"
-                          className="block font-semibold"
-                        >
-                          追加
-                        </Link>
+                      <Button
+                        type="button"
+                        onClick={handleActorSelect}
+                        className="rounded bg-sky-600 px-4 py-2 text-sm text-white data-active:bg-sky-700 data-hover:bg-sky-500"
+                      >
+                        追加
                       </Button>
                     </div>
 
