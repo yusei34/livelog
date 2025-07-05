@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -43,9 +42,6 @@ export default function RegisterEventModal({
     if (savedVenue) setVenue(savedVenue);
     if (savedDate) setEventDate(savedDate);
   }, []);
-  useEffect(() => { localStorage.setItem("eventForm.title", title); }, [title]);
-  useEffect(() => { localStorage.setItem("eventForm.venue", venue); }, [venue]);
-  useEffect(() => { localStorage.setItem("eventForm.date", eventDate); }, [eventDate]);
 
   const handleRemoveActor = (index) => {
     setActorIds((prev) => prev.filter((_, i) => i !== index));

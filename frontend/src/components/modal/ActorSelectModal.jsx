@@ -62,7 +62,7 @@ export default function ActorSelectModal({
 
   return (
     <Dialog open={isOpen} onClose={handleCancel} as="div" className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/70" />
+      <DialogBackdrop className="fixed inset-0 bg-black/50" />
       <div className="fixed inset-0 z-10 w-full overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel className="w-full max-w-lg p-6 bg-white rounded-2xl shadow-xl space-y-4">
