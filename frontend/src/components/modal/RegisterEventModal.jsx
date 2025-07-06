@@ -96,7 +96,7 @@ export default function RegisterEventModal({
                 className="w-full space-y-4 rounded-xl bg-white"
               >
                 <Field>
-                  <Label className="text-sm/6 font-medium ">title</Label>
+                  <Label className="text-sm/6 font-semibold ">タイトル</Label>
                   <Input
                     type="text"
                     value={title}
@@ -109,7 +109,7 @@ export default function RegisterEventModal({
                   />
                 </Field>
                 <Field>
-                  <Label className="text-sm/6 font-medium ">Venue</Label>
+                  <Label className="text-sm/6 font-semibold ">会場</Label>
                   <Input
                     type="text"
                     value={venue}
@@ -122,7 +122,7 @@ export default function RegisterEventModal({
                   />
                 </Field>
                 <Field>
-                  <Label className="text-sm/6 font-medium ">Date</Label>
+                  <Label className="text-sm/6 font-semibold ">開催日</Label>
                   <Input
                     type="date"
                     value={eventDate}
@@ -146,7 +146,7 @@ export default function RegisterEventModal({
                         setIsOpen(false);
                         onOpenActorModal();
                       }}
-                      className="rounded bg-sky-600 px-4 py-2 text-sm text-white"
+                      className="rounded-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg   px-4 py-2 text-sm text-white  hover:shadow-xl : transition-all duration-300"
                     >
                       追加
                     </Button>

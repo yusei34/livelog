@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
+from sqlmodel import select, or_
 from ..deps import SessionDep
 from models.models import Actor, ActorCreate, ActorPublic, ActorsPublic, ActorRead, ActorUpdate, Event, Message
 
@@ -24,10 +24,20 @@ def create_actor(*, session: SessionDep, actor: ActorCreate, event_ids: list[uui
     return db_actor
 
 @router.get("/", response_model=ActorsPublic)
-def read_actors(*, session:SessionDep, offset: int = 0, limit: int = Query(default=20, le=20)) ->Any:
+def read_actors(*, 
+                session:SessionDep, 
+                skip: int = 0, 
+                limit: int = Query(default=20, le=100),
+                q: str | None = Query(default=None)
+                ) ->Any:
     
-    actors = session.exec(select(Actor).offset(offset).limit(limit)).all()
     
+    if q:
+        result = select(Actor).where(or_(Actor.name.ilike(f'%{q}%')))
+    else:
+        result = select(Actor)
+        
+    actors = session.exec(result.offset(skip).limit(limit)).all()
     return ActorsPublic(data=actors)
 
 @router.get("/{actor_id}", response_model=ActorRead)

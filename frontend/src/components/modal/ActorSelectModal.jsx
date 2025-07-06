@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from "react";
+import SearchBar from "../SearchBar";
 import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from "@headlessui/react";
 import { fetchActors } from "@/lib/api/fetchActors";
 
@@ -69,6 +70,7 @@ export default function ActorSelectModal({
             <DialogTitle className="text-xl font-bold">
               アクター検索・選択
             </DialogTitle>
+            <SearchBar/>
             <input
               type="text"
               value={query}
