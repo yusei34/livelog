@@ -21,12 +21,18 @@ export default function RegisterEventModal({
   actorIds,
   setActorIds,
   actorNames,
-  setActorNames,
+  setActorNames
 }) {
   const [isOpen, setIsOpen] = useState(true);
-  const [title, setTitle] = useState("");
-  const [venue, setVenue] = useState("");
-  const [eventDate, setEventDate] = useState("");
+  const [title, setTitle] = useState(
+    () => localStorage.getItem("eventForm.title") || ""
+  );
+  const [venue, setVenue] = useState(
+    () => localStorage.getItem("eventForm.venue") || ""
+  );
+  const [eventDate, setEventDate] = useState(
+    () => localStorage.getItem("eventForm.date") || ""
+  );
 
   const close = () => {
     setIsOpen(false);
@@ -34,14 +40,16 @@ export default function RegisterEventModal({
   };
 
   // localStorage連携
+
   useEffect(() => {
-    const savedTitle = localStorage.getItem("eventForm.title");
-    const savedVenue = localStorage.getItem("eventForm.venue");
-    const savedDate = localStorage.getItem("eventForm.date");
-    if (savedTitle) setTitle(savedTitle);
-    if (savedVenue) setVenue(savedVenue);
-    if (savedDate) setEventDate(savedDate);
-  }, []);
+    localStorage.setItem("eventForm.title", title);
+  }, [title]);
+  useEffect(() => {
+    localStorage.setItem("eventForm.venue", venue);
+  }, [venue]);
+  useEffect(() => {
+    localStorage.setItem("eventForm.date", eventDate);
+  }, [eventDate]);
 
   const handleRemoveActor = (index) => {
     setActorIds((prev) => prev.filter((_, i) => i !== index));
@@ -53,7 +61,7 @@ export default function RegisterEventModal({
     try {
       await axios.post("http://127.0.0.1:8000/events", {
         event: { title, venue, event_date: eventDate },
-        actor_ids: actorIds,
+        actor_ids: actorIds
       });
       toast.success("イベントを登録しました");
       localStorage.removeItem("eventForm.title");
@@ -139,19 +147,40 @@ export default function RegisterEventModal({
                   <label className="block font-semibold">
                     出演アーティスト
                   </label>
-                  <div>
+                  <div className="pt-4">
                     <Button
                       type="button"
                       onClick={() => {
                         setIsOpen(false);
                         onOpenActorModal();
                       }}
-                      className="rounded-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg   px-4 py-2 text-sm text-white  hover:shadow-xl : transition-all duration-300"
+                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg  px-4 py-2 text-sm text-white  hover:shadow-xl : transition-all duration-300"
                     >
+                      <PlusCircle className="mr-2 h-4 w-4" />
                       追加
                     </Button>
                   </div>
-                  <ul className="space-y-2">
+
+                  <div className="pt-2">
+                    {actorNames.map((name, index) => (
+                      <div
+                        key={index}
+                        className="rounded-lg my-2 p-4 bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200"
+                      >
+                        <div className="flex justify-between">
+                          <div className="text-xl pr-3">{name}</div>
+                          <Button
+                            onClick={() => handleRemoveActor(index)}
+                            className="text-red-500"
+                            type="button"
+                          >
+                            <X />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* <ul className="space-y-2">
                     {actorNames.map((name, index) => (
                       <li
                         key={index}
@@ -163,11 +192,11 @@ export default function RegisterEventModal({
                           onClick={() => handleRemoveActor(index)}
                           className="text-red-500"
                         >
-                          削除
+                          
                         </Button>
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </div>
                 <div className="justify-self-end p-2">
                   <Button
