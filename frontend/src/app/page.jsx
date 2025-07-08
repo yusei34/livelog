@@ -1,4 +1,4 @@
-import EventModalController from "../components/modal/EventModalController";
+import EventModalController from "../components/EventRegisterModal/EventModalController";
 import EventsArea from "@/components/EventsArea";
 import DashBoardArea from "../components/DashBoardArea";
 
