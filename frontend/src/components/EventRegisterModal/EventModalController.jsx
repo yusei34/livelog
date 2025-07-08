@@ -20,6 +20,7 @@ export default function EventModalController() {
         <PlusCircle className="mr-2 h-4 w-4" />
         イベント登録
       </Button>
+
       {showEventModal && (
         <RegisterEventModal
           onClose={() => setShowEventModal(false)}

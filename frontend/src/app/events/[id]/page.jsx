@@ -4,7 +4,7 @@ import React, { use, useEffect, useState } from "react";
 import { fetchEventById } from "@/lib/api/fetchEvents";
 import { dateFormat } from "@/lib/utils";
 import RegisterExpense from '@/components/RegisterExpense';
-import OpenModalButton from '@/components/old/OpenModalButton';
+import EventModalController from "../../../components/EventEditModal/EventModalController";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -66,9 +66,10 @@ const EventDetailPage = ({ params }) => {
                 </h1>
               </div>
               <div className="flex gap-2">
-                <Button className="bg-white/20 hover:bg-white/30 text-white border-white/20 rounded">
-                  <Edit className="h-8 w-8" />
-                </Button>
+              <EventModalController />
+                {/* <Button className="p-2 bg-white/20 hover:bg-white/30 text-white border-white/20 rounded">
+                  <Edit className="h-6 w-6" />
+                </Button> */}
               </div>
             </div>
           </div>
