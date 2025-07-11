@@ -1,9 +1,9 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchEventById } from "@/lib/api/fetchEvents";
 import { dateFormat } from "@/lib/utils";
-import RegisterExpense from '@/components/RegisterExpense';
+import RegisterExpense from "@/components/RegisterExpense";
 import EventModalController from "../../../components/EventEditModal/EventModalController";
 import Link from "next/link";
 import {
@@ -33,7 +33,7 @@ const EventDetailPage = ({ params }) => {
 
   useEffect(() => {
     fetchEventById(id).then(setEvent);
-  }, [id,event]);
+  }, [id, event]);
 
   useEffect(() => {
     const format = async () => {
@@ -42,8 +42,6 @@ const EventDetailPage = ({ params }) => {
     };
     format();
   }, [event]);
-
-  console.log(date);
 
   // データがまだない場合
   if (!event) return <div>読み込み中...</div>;
@@ -66,16 +64,16 @@ const EventDetailPage = ({ params }) => {
                 </h1>
               </div>
               <div className="flex gap-2">
-              <EventModalController />
-                {/* <Button className="p-2 bg-white/20 hover:bg-white/30 text-white border-white/20 rounded">
-                  <Edit className="h-6 w-6" />
-                </Button> */}
+                {/* <EventModalController initialData={event} /> */}
+                <Link href={`/events/${id}/edit`}>
+                  <Button className="p-2 bg-white/20 hover:bg-white/30 text-white border-white/20 rounded">
+                    <Edit className="h-6 w-6" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
-
-     
 
         <main className=" py-8 px-20">
           {/* 開催日 */}
@@ -178,7 +176,7 @@ const EventDetailPage = ({ params }) => {
                         )}
                       </CardDescription>
                     </div>
-                     <RegisterExpense event_id={event.id}/>
+                    <RegisterExpense event_id={event.id} />
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -209,7 +207,6 @@ const EventDetailPage = ({ params }) => {
                 </CardContent>
               </Card>
             </div>
-
           </div>
         </main>
       </div>
