@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { fetchEventById } from "@/lib/api/fetchEvent"; // 1件取得するAPI
+import { fetchEventById } from "@/lib/api/fetchEvents";; // 1件取得するAPI
 import EventModalController from "../../../../components/EventEditModal/EventModalController"; // 下記で作成
 
 export default function EditEventPage() {

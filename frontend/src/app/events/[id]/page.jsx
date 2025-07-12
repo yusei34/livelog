@@ -33,7 +33,7 @@ const EventDetailPage = ({ params }) => {
 
   useEffect(() => {
     fetchEventById(id).then(setEvent);
-  }, [id, event]);
+  }, [id]);
 
   useEffect(() => {
     const format = async () => {
@@ -64,12 +64,12 @@ const EventDetailPage = ({ params }) => {
                 </h1>
               </div>
               <div className="flex gap-2">
-                {/* <EventModalController initialData={event} /> */}
-                <Link href={`/events/${id}/edit`}>
+                <EventModalController initialData={event} />
+                {/* <Link href={`/events/${id}/edit`}>
                   <Button className="p-2 bg-white/20 hover:bg-white/30 text-white border-white/20 rounded">
                     <Edit className="h-6 w-6" />
                   </Button>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
