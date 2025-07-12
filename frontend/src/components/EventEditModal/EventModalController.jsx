@@ -43,6 +43,7 @@ export default function EventModalController({ initialData }) {
             setActorIds,
             setActorNames
           }}
+          onClose={() => setShowEditModal(false)}
           // アーティスト選択モーダルを開くための関数
           onOpenActorModal={() => {
             setShowEditModal(false);
