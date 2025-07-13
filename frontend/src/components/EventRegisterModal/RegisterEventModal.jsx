@@ -104,7 +104,7 @@ export default function RegisterEventModal({
                 className="w-full space-y-4 rounded-xl bg-white"
               >
                 <Field>
-                  <Label className="text-sm/6 font-semibold ">タイトル</Label>
+                  <Label className="text-sm/6 font-bold ">タイトル</Label>
                   <Input
                     type="text"
                     value={title}
@@ -117,7 +117,7 @@ export default function RegisterEventModal({
                   />
                 </Field>
                 <Field>
-                  <Label className="text-sm/6 font-semibold ">会場</Label>
+                  <Label className="text-sm/6 font-bold ">会場</Label>
                   <Input
                     type="text"
                     value={venue}
@@ -130,7 +130,7 @@ export default function RegisterEventModal({
                   />
                 </Field>
                 <Field>
-                  <Label className="text-sm/6 font-semibold ">開催日</Label>
+                  <Label className="text-sm/6 font-bold ">開催日</Label>
                   <Input
                     type="date"
                     value={eventDate}
@@ -144,7 +144,7 @@ export default function RegisterEventModal({
                 </Field>
 
                 <div>
-                  <label className="block font-semibold">
+                  <label className="block font-bold">
                     出演アーティスト
                   </label>
                   <div className="pt-4">
@@ -180,23 +180,6 @@ export default function RegisterEventModal({
                       </div>
                     ))}
                   </div>
-                  {/* <ul className="space-y-2">
-                    {actorNames.map((name, index) => (
-                      <li
-                        key={index}
-                        className="flex justify-between items-center border p-2 rounded"
-                      >
-                        {name}
-                        <Button
-                          type="button"
-                          onClick={() => handleRemoveActor(index)}
-                          className="text-red-500"
-                        >
-                          
-                        </Button>
-                      </li>
-                    ))}
-                  </ul> */}
                 </div>
                 <div className="justify-self-end p-2">
                   <Button

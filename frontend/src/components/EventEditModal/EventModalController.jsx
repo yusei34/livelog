@@ -5,7 +5,7 @@ import ActorSelectModal from "./ActorSelectModal";
 import { Button } from "@headlessui/react";
 import { Edit } from "lucide-react";
 
-export default function EventModalController({ initialData }) {
+export default function EventModalController({ initialData, onUpdateSuccess }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showActorModal, setShowActorModal] = useState(false);
 
@@ -49,6 +49,7 @@ export default function EventModalController({ initialData }) {
             setShowEditModal(false);
             setShowActorModal(true);
           }}
+         onUpdateSuccess={onUpdateSuccess}
         />
       )}
 

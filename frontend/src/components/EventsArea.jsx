@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Ticket, ChevronRight, JapaneseYen } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import {
   Card,
@@ -17,10 +17,6 @@ import { fetchAllEvents, fetchEventById } from "@/lib/api/fetchEvents";
 const EventsArea = () => {
   const [events, setEvents] = useState([]);
 
-  // const getActors = async (id) =>{
-  //   const res = fetchEventById(id);
-  //   return res;
-  // } 
 
   useEffect(() => {
     fetchAllEvents().then((data) => {
