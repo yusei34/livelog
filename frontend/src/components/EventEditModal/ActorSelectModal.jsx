@@ -65,7 +65,7 @@ export default function ActorSelectModal({
             />
             <h2 className="text-lg font-semibold mt-6">選択中のアクター</h2>
 
-            <div>
+            <div className="grid gap-2">
               {selectedIds.map((id, idx) => (
                 <div
                   key={id}

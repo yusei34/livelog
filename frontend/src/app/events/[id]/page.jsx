@@ -31,8 +31,14 @@ const EventDetailPage = ({ params }) => {
   const [date, setDate] = useState("");
   const id = params.id;
 
+// データを取得してstateを更新する関数
+  const fetchAndUpdateEvent = async () => {
+    const updatedEvent = await fetchEventById(id);
+    setEvent(updatedEvent);
+  };
+
   useEffect(() => {
-    fetchEventById(id).then(setEvent);
+    fetchAndUpdateEvent(); // 初回読み込み
   }, [id]);
 
   useEffect(() => {
@@ -64,12 +70,7 @@ const EventDetailPage = ({ params }) => {
                 </h1>
               </div>
               <div className="flex gap-2">
-                <EventModalController initialData={event} />
-                {/* <Link href={`/events/${id}/edit`}>
-                  <Button className="p-2 bg-white/20 hover:bg-white/30 text-white border-white/20 rounded">
-                    <Edit className="h-6 w-6" />
-                  </Button>
-                </Link> */}
+                <EventModalController initialData={event} onUpdateSuccess={fetchAndUpdateEvent} />
               </div>
             </div>
           </div>

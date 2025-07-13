@@ -1,15 +1,12 @@
 import axios from 'axios';
 
-export async function putEvent(id,event, actor_ids) {
+export async function putEvent(id,data) {
     try {
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`,{
-            event,
-            actor_ids,
-        });
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`,data);
         return { success : true };
     } catch (error) {
-        console.error('登録失敗', error);
-        return { message : '登録に失敗しました' };
+        console.error('failure PUTrequest', error);
+        throw error;
     }
 }
 
