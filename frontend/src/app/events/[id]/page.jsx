@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchEventById } from "@/lib/api/fetchEvents";
+import { deleteExpense } from "@/lib/api/postExpense";
 import { dateFormat } from "@/lib/utils";
 import RegisterExpense from "@/components/RegisterExpense";
 import EventModalController from "../../../components/EventEditModal/EventModalController";
@@ -31,7 +32,7 @@ const EventDetailPage = ({ params }) => {
   const [date, setDate] = useState("");
   const id = params.id;
 
-// データを取得してstateを更新する関数
+  // データを取得してstateを更新する関数
   const fetchAndUpdateEvent = async () => {
     const updatedEvent = await fetchEventById(id);
     setEvent(updatedEvent);
@@ -70,7 +71,10 @@ const EventDetailPage = ({ params }) => {
                 </h1>
               </div>
               <div className="flex gap-2">
-                <EventModalController initialData={event} onUpdateSuccess={fetchAndUpdateEvent} />
+                <EventModalController
+                  initialData={event}
+                  onUpdateSuccess={fetchAndUpdateEvent}
+                />
               </div>
             </div>
           </div>
@@ -201,6 +205,13 @@ const EventDetailPage = ({ params }) => {
                           <span className="font-bold text-green-600 text-lg">
                             ¥{expense.amount.toLocaleString()}
                           </span>
+
+                          <Button
+                            className="border"
+                            onClick={deleteExpense(expense.id)}
+                          >
+                            dummy
+                          </Button>
                         </div>
                       ))
                     )}
