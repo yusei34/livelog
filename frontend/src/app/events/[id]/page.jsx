@@ -1,8 +1,6 @@
 // "use client";
 import { fetchEventById } from "@/lib/api/fetchEvents";
 import { deleteExpense } from "@/lib/api/postExpense";
-
-import RegisterExpense from "@/components/RegisterExpense";
 import EventModalController from "../../../components/EventEditModal/EventModalController";
 import ExpenseArea from "../../../components/ExpenseArea";
 import DetailEventArea from "../../../components/DetailEventArea";
@@ -19,34 +17,11 @@ import {
   PlusCircle
 } from "lucide-react";
 import { Button } from "@headlessui/react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter
-} from "@/components/DetailCard";
-import { toast } from "sonner";
 
 const EventDetailPage = async ({ params }) => {
-  // fetchがうまくいかない
   const id = params.id
   const event = await fetchEventById(id);
-
-  // データを取得してstateを更新する関数
-  // const fetchAndUpdateEvent = async () => {
-  //   const event = await fetchEventById(id);
-  //   return event;
-  // };
-
-
-  // useEffect(() => {
-  //   fetchAndUpdateEvent(); // 初回読み込み
-  // }, [id]);
-
  
-
   // データがまだない場合
   if (!event) return <div>読み込み中...</div>;
 
@@ -70,7 +45,6 @@ const EventDetailPage = async ({ params }) => {
               <div className="flex gap-2">
                 <EventModalController
                   initialData={event}
-                  // onUpdateSuccess={fetchAndUpdateEvent}
                 />
               </div>
             </div>

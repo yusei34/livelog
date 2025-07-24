@@ -49,7 +49,6 @@ export default function EventModalController({ initialData, onUpdateSuccess }) {
             setShowEditModal(false);
             setShowActorModal(true);
           }}
-         onUpdateSuccess={onUpdateSuccess}
         />
       )}
 
