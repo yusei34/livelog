@@ -24,7 +24,6 @@ export default function EditEventModal({
   formData,
   setters,
   onOpenActorModal,
-  onUpdateSuccess,
   onClose
 }) {
   const router = useRouter();
@@ -55,9 +54,8 @@ export default function EditEventModal({
       };
       await putEvent(initialData.id, dataToUpdate);
       toast.success("イベントを更新しました");
-      router.refresh();
       close();
-      onUpdateSuccess();
+      router.refresh();
     } catch (err) {
       toast.error("更新に失敗しました");
     }

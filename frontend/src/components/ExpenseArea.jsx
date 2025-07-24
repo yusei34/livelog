@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
-import { deleteExpense } from "@/lib/api/postExpense";
+import { useRouter } from "next/navigation";
+import { deleteExpense } from "@/lib/api/deleteExpense";
 import { Button } from "@headlessui/react";
 import {
   Card,
@@ -11,28 +14,24 @@ import {
 } from "@/components/DetailCard";
 import RegisterExpense from "@/components/RegisterExpense";
 import {
-  ArrowLeft,
-  Calendar,
-  MapPinIcon,
-  Guitar,
-  Music,
   Wallet,
-  Edit,
-  PlusCircle
 } from "lucide-react";
+import { toast } from "sonner"
 
+function ExpenseArea({ event }) {
+  const router = useRouter();
 
-//Delete expense
-const onDeleteExpense = async (id) => {
-  try {
-    await deleteExpense(id);
-    toast.success("削除しました");
-  } catch (error) {
-    toast.error("削除に失敗しました");
-  }
-};
+  //Delete expense
+  const onDeleteExpense = async (id) => {
+    try {
+      await deleteExpense(id);
+      toast.success("削除しました");
+      router.refresh();
+    } catch (error) {
+      toast.error("削除に失敗しました");
+    }
+  };
 
-function ExpenseArea({event}) {
   return (
     <div className="space-y-6">
       <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-green-50/30 overflow-hidden">
@@ -83,8 +82,9 @@ function ExpenseArea({event}) {
                   </span>
 
                   <Button
-                    className="border"
-                    onClick={onDeleteExpense(expense.id)}
+                    type="button"
+                    className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 "
+                    onClick={ () => onDeleteExpense(expense.id) }
                   >
                     dummy
                   </Button>

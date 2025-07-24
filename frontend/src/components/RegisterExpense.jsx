@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { postExpense } from "../lib/api/postExpense";
 import { toast } from "sonner";
@@ -47,8 +47,9 @@ const RegisterExpense = ({ event_id }) => {
     e.preventDefault();
     try {
       await postExpense(selected.name, itemName, amount, event_id);
-      close();
       toast.success("登録完了");
+      close();
+      router.refresh()
       
     } catch (err) {
       toast.error("登録に失敗しました");
@@ -139,6 +140,7 @@ const RegisterExpense = ({ event_id }) => {
                     <Label className="text-sm/6 font-medium ">Item Name</Label>
                     <Input
                       type="text"
+                      value={itemName}
                       onChange={(e) => setItemName(e.target.value)}
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
@@ -150,6 +152,7 @@ const RegisterExpense = ({ event_id }) => {
                     <Label className="text-sm/6 font-medium ">Amount</Label>
                     <Input
                       type="number"
+                      value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       className={clsx(
                         "mt-3 block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm/6 ",
