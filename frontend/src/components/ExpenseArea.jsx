@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { deleteExpense } from "@/lib/api/deleteExpense";
 import { Button } from "@headlessui/react";
+import ExpenseOptionMenu from "@/components/ExpenseOptionMenu";
 import {
   Card,
   CardHeader,
@@ -13,10 +14,8 @@ import {
   CardFooter
 } from "@/components/DetailCard";
 import RegisterExpense from "@/components/RegisterExpense";
-import {
-  Wallet,
-} from "lucide-react";
-import { toast } from "sonner"
+import { Wallet } from "lucide-react";
+import { toast } from "sonner";
 
 function ExpenseArea({ event }) {
   const router = useRouter();
@@ -80,14 +79,10 @@ function ExpenseArea({ event }) {
                   <span className="font-bold text-green-600 text-lg">
                     ¥{expense.amount.toLocaleString()}
                   </span>
-
-                  <Button
-                    type="button"
-                    className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 "
-                    onClick={ () => onDeleteExpense(expense.id) }
-                  >
-                    dummy
-                  </Button>
+                  <div className="inline-flex justify-end">
+                    <ExpenseOptionMenu onDelete={()=>onDeleteExpense(expense.id)}/>
+                  </div>
+                  
                 </div>
               ))
             )}
@@ -99,3 +94,10 @@ function ExpenseArea({ event }) {
 }
 
 export default ExpenseArea;
+/* <Button
+                    type="button"
+                    className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 "
+                    onClick={ () => onDeleteExpense(expense.id) }
+                  >
+                    dummy
+                  </Button> */
