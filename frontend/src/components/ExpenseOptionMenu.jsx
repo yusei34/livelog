@@ -6,7 +6,7 @@ import {
   Trash2,
 } from "lucide-react"
 
-const ExpenseOptionMenu = ({onDelete}) => {
+const ExpenseOptionMenu = ({onEdit, onDelete}) => {
   return (
     <div className=" text-right"> 
       <Menu>
@@ -20,7 +20,7 @@ const ExpenseOptionMenu = ({onDelete}) => {
           className="w-52 origin-top-right shadow-xl rounded-xl bg-white text-sm/6 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
         >
           <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-hover:bg-gray-300 data-focus:bg-gray-300">
+            <button onClick={onEdit} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-hover:bg-gray-300 data-focus:bg-gray-300">
               <Pencil className="size-4 fill-white/30" />
               Edit
               <kbd className="ml-auto hidden font-sans text-xs group-data-focus:inline">⌘E</kbd>
@@ -30,7 +30,7 @@ const ExpenseOptionMenu = ({onDelete}) => {
           <div className="my-1 h-px bg-white/5" />
 
           <MenuItem>
-            <button onClick={()=>onDelete} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-hover:bg-gray-300 data-focus:bg-gray-300">
+            <button onClick={onDelete} className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-hover:bg-gray-300 data-focus:bg-gray-300">
               <Trash2 className="size-4 fill-white/30" />
               Delete
               <kbd className="ml-auto hidden font-sans text-xs group-data-focus:inline">⌘D</kbd>
