@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteExpense } from "@/lib/api/deleteExpense";
 import { Button } from "@headlessui/react";
 import ExpenseOptionMenu from "@/components/ExpenseOptionMenu";
+import EditExpense from "@/components/EditExpense";
 import {
   Card,
   CardHeader,
@@ -19,7 +20,8 @@ import { toast } from "sonner";
 
 function ExpenseArea({ event }) {
   const router = useRouter();
-
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentExpenseToEdit, setCurrentExpenseToEdit] = useState(null); // 編集対象の費用データ
   //Delete expense
   const onDeleteExpense = async (id) => {
     try {
@@ -29,6 +31,19 @@ function ExpenseArea({ event }) {
     } catch (error) {
       toast.error("削除に失敗しました");
     }
+  };
+
+  // Edit expense のボタンをクリックしたときのハンドラ
+  const onEditExpense = (expense) => {
+    setCurrentExpenseToEdit(expense); // 編集対象の費用をセット
+    setShowEditModal(true); // 編集モーダルを開く
+  };
+
+  // 費用編集モーダルが閉じた後の処理
+  const handleEditModalClose = () => {
+    setShowEditModal(false);
+    setCurrentExpenseToEdit(null); // 編集対象をクリア
+    // データのリフレッシュはEditExpenseModal内でonUpdateSuccessが呼び出す
   };
 
   return (
@@ -80,24 +95,28 @@ function ExpenseArea({ event }) {
                     ¥{expense.amount.toLocaleString()}
                   </span>
                   <div className="inline-flex justify-end">
-                    <ExpenseOptionMenu onDelete={()=>onDeleteExpense(expense.id)}/>
+                    <ExpenseOptionMenu
+                      onEdit={() => onEditExpense(expense)}
+                      onDelete={() => onDeleteExpense(expense.id)}
+                    />
                   </div>
-                  
                 </div>
               ))
             )}
           </div>
         </CardContent>
       </Card>
+      {/* 編集モーダルを表示 (編集時のみ) */}
+      {showEditModal && currentExpenseToEdit && (
+        <EditExpense
+          initialExpenseData={currentExpenseToEdit}
+          expenseId={currentExpenseToEdit.id}
+          event_id={event.id} // イベントIDも渡す
+          onClose={handleEditModalClose}
+        />
+      )}
     </div>
   );
 }
 
 export default ExpenseArea;
-/* <Button
-                    type="button"
-                    className=" h-10 rounded-md px-4 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl transition-all duration-300 "
-                    onClick={ () => onDeleteExpense(expense.id) }
-                  >
-                    dummy
-                  </Button> */
