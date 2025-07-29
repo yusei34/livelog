@@ -38,7 +38,7 @@ const EditExpense = ({
   onClose
 }) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(
     categories.find((cat) => cat.name === initialExpenseData.category) ||
       categories[0]
@@ -47,8 +47,15 @@ const EditExpense = ({
   const [amount, setAmount] = useState(initialExpenseData.amount || "");
 
   //   開閉制御用の関数
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  // const open = () => setIsOpen(true);
+  // const close = () => setIsOpen(false);
+
+
+  // 親から渡されたonCloseを呼び出す
+  const handleClose = () => {
+    if (onClose) onClose();
+  };
+
 
   // submit用のハンドラ
   const handleSubmit = async (e) => {
@@ -62,7 +69,7 @@ const EditExpense = ({
       };
       await putExpense(expenseId,putData);
       toast.success("更新完了");
-      close();
+      handleClose();
       router.refresh();
     } catch (err) {
       toast.error("更新に失敗しました");
@@ -72,7 +79,7 @@ const EditExpense = ({
   return (
     <>
 
-      <Dialog open={isOpen} onClose={close} as="div" className=" relative z-50">
+      <Dialog open={true} onClose={handleClose} as="div" className=" relative z-50">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-black/50 duration-300 ease-out data-closed:opacity-0"
@@ -88,7 +95,7 @@ const EditExpense = ({
                   費用編集
                 </DialogTitle>
                 <Button
-                  onClick={close}
+                  onClick={handleClose}
                   className="rounded-sm hover:opacity-70 hover:bg-gray-300"
                 >
                   <X className="" />
