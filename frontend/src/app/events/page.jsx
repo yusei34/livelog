@@ -2,20 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@headlessui/react";
-import { fetchEvents } from "@/lib/api/fetchEvents";
+import { fetchAllEvents } from "@/lib/api/fetchEvents";
 import Link from "next/link";
 
 import EventListItem from "@/components/EventListItem";
 import SearchBar from "../../components/SearchBar";
+import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
+
+const PAGE_SIZE = 5;
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]); //取得イベントの配列を保持
-
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchEvents().then(setEvents);
-  }, []);
+    const fetchEvent = async () => {
+      const skip = (page - 1) * PAGE_SIZE;
+      const res = await fetchAllEvents(skip, PAGE_SIZE);
+      setEvents(res);
+    };
+    fetchEvent();
+  }, [page]);
+
+  // const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
     <>
@@ -33,6 +43,12 @@ export default function EventsPage() {
             ))
           )}
         </div>
+
+        <Pagination
+          page={page}
+          // totalPages={totalPages}
+          onPageChange={setPage}
+        />
       </div>
     </>
   );

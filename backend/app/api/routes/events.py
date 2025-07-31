@@ -26,16 +26,14 @@ def create_event(*, session: SessionDep, event: EventCreate, actor_ids: list[uui
 @router.get('/', response_model=EventsPublic)
 def read_events(
     *, session: SessionDep, 
-    skip: int = 0, limit: int = Query(default=20, le=100),
+    skip: int = 0, limit: int = Query(default=20),
     q: str | None = Query(default=None,)
 ) -> Any :
     """
     Retrieve events.
     """
     if q:
-        result = select(Event).where(or_(Event.title.ilike(f'%{q}%'),
-                                        #  Event.venue.ilike(f'%{q}%') #会場名も含めて検索場合はコメント外す
-                                         ))
+        result = select(Event).where(or_(Event.title.ilike(f'%{q}%'),))
     else:
         result = select(Event)
     events = session.exec(result.offset(skip).limit(limit)).all()
