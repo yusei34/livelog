@@ -11,9 +11,9 @@ export async function fetchEvents(skip=0, limit=20) {
   }
 }
 
-export async function fetchAllEvents() {
+export async function fetchAllEvents(skip, limit) {
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/events?skip=0&limit=100`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/events?skip=${skip}&limit=${limit}`);
     return res.data.data; 
   } catch (error) {
     console.error('イベント取得失敗:', error);
