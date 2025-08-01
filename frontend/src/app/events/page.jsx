@@ -15,12 +15,14 @@ const PAGE_SIZE = 5;
 export default function EventsPage() {
   const [events, setEvents] = useState([]); //取得イベントの配列を保持
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchEvent = async () => {
       const skip = (page - 1) * PAGE_SIZE;
       const res = await fetchAllEvents(skip, PAGE_SIZE);
       setEvents(res);
+      setTotal(events.length());
     };
     fetchEvent();
   }, [page]);
@@ -29,10 +31,18 @@ export default function EventsPage() {
 
   return (
     <>
-      <div className="p-4 m-8 space-y-6">
+      <div className="flex flex-col p-4 m-8 space-y-6">
         <h1 className="text-2xl font-bold">ライブ一覧</h1>
 
         <SearchBar className="justify-self-center" />
+
+        <div className="mx-12">
+          <Pagination
+            page={page}
+            // totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        </div>
 
         <div className="p-2 mt-4 overflow-y-auto transition flex flex-col-reverse rounded-3xl ">
           {events.length === 0 ? (
@@ -43,12 +53,6 @@ export default function EventsPage() {
             ))
           )}
         </div>
-
-        <Pagination
-          page={page}
-          // totalPages={totalPages}
-          onPageChange={setPage}
-        />
       </div>
     </>
   );

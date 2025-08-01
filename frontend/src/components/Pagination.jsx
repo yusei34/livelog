@@ -11,11 +11,11 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         前へ
       </button>
       
-        <button
+        {/* <button
           onClick={() => onPageChange(i + 1)}
           className={`px-3 py-1 border rounded `}
         >
-        </button>
+        </button> */}
    
       <button
         onClick={() => onPageChange(page + 1)}
