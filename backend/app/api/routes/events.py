@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select,or_
+from sqlmodel import select,or_, func
 from ..deps import SessionDep
 from models.models import Event, EventCreate, EventsPublic, EventPublic, EventUpdate, Message ,EventActorLink, EventRead, Actor
 
@@ -36,8 +36,9 @@ def read_events(
         result = select(Event).where(or_(Event.title.ilike(f'%{q}%'),))
     else:
         result = select(Event)
+    total = session.exec(select(func.count()).select_from(Event)).one()
     events = session.exec(result.offset(skip).limit(limit)).all()
-    return EventsPublic(data=events)
+    return EventsPublic(data=events, total=total)
 
 
 @router.get('/{event_id}', response_model= EventRead)

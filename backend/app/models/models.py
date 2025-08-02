@@ -26,11 +26,13 @@ class EventPublic(EventBase):
 
 class EventsPublic(SQLModel):
     data: list[EventPublic]
+    total: int
 
 class EventUpdate(EventBase):
     title: str | None = None
     venue: str | None = None
     event_date: date | None = None
+    
 
 class ActorBase(SQLModel):
     name: str
