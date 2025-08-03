@@ -20,7 +20,7 @@ const EventListItem = ({ event }) => {
     // className="flex items-center justify-between rounded-b-lg border-b border-gray-200 p-4 m-12  hover:bg-gray-50 hover:transition-colors hover:shadow-md"
     <>
         <Link href={`/events/${event.id}`} >
-          <Card className="border-none space-y-1 flex items-center justify-between rounded-b-lg border-b bg-gradient-to-tr from-green-50 to-emerald-100 border-gray-200 p-8 mx-12 my-2 hover:bg-gray-50 hover:transition-colors hover:shadow-md">
+          <Card className="border-none space-y-1 flex items-center justify-between rounded-b-lg border-b bg-gradient-to-br from-green-50 to-emerald-300 border-gray-200 p-8 mx-12 my-2 hover:bg-gray-50 hover:transition-colors hover:shadow-md">
             <CardTitle className="px-2">
               <h2 className="font-medium text-lg">{event.title}</h2>
             </CardTitle>
