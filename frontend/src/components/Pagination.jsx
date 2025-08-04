@@ -4,7 +4,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
-        className="px-3 py-1 border rounded"
+        className="px-3 py-1 border border-gray-500 rounded text-gray-700"
       >
         前へ
       </button>
@@ -12,7 +12,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         <button
           key={i+1}
           onClick={() => onPageChange(i + 1)}
-          className={`px-3 py-1 border rounded ${page === i+1 ? "bg-green-200 font-bold" : ""}`}
+          className={`px-3 py-1 border border-gray-500  text-gray-700 rounded ${page === i+1 ? "bg-green-200 font-bold " : ""}`}
         >
           {i + 1}
         </button>
@@ -20,7 +20,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages || totalPages === 0}
-        className="px-3 py-1 border rounded"
+        className="px-3 py-1 border border-gray-500  text-gray-700 rounded "
       >
         次へ
       </button>

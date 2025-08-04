@@ -31,42 +31,39 @@ export default function EventsPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
-        <div className="flex flex-col space-y-6">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-100">
+        <div className="flex flex-col px-18">
           {/* title */}
-          <div className="bg-gradient-to-r from-green-300 to-orange-300">
-            <div className="w-max flex flex-col border p-12 mx-24 gap-3">
-              <div className="text-white text-4xl font-bold tracking-tight">
-                参戦ライブ一覧
-              </div>
-              <div className="bg-emerald-200 rounded-xl border border-white text-xl flex flex-col items-center py-4 gap-4">
-                <span>総参戦数</span>
-                <span>{total}件</span>
-              </div>
-            </div>
+          <div className="text-neutral-400 text-2xl font-bold tracking-tight p-4">
+            参戦ライブ一覧
           </div>
-          
+
           <div className="p-8">
             <SearchBar className="justify-self-center" />
           </div>
 
-          <div className="mx-12">
-            <Pagination
-              page={page}
-              totalPages={totalPages}
-              onPageChange={setPage}
-            />
+          <div className="flex flex-col items-center px-32">
+            <div className="mx-12 self-start">
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+              />
+            </div>
+
+            <div className="rounded-xl shadow-xl p-16 m-20 w-6xl border border-gray-400/10">
+              <div className="p-2 mt-4 overflow-y-auto transition flex flex-col-reverse rounded-3xl ">
+                {events.length === 0 ? (
+                  <p>イベントがありません</p>
+                ) : (
+                  events.map((event) => (
+                    <EventListItem key={event.id} event={event} />
+                  ))
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="p-2 mt-4 overflow-y-auto transition flex flex-col-reverse rounded-3xl ">
-            {events.length === 0 ? (
-              <p>イベントがありません</p>
-            ) : (
-              events.map((event) => (
-                <EventListItem key={event.id} event={event} />
-              ))
-            )}
-          </div>
         </div>
       </div>
     </>
