@@ -17,23 +17,40 @@ const EventListItem = ({ event }) => {
     day: "2-digit"
   });
   return (
-    // className="flex items-center justify-between rounded-b-lg border-b border-gray-200 p-4 m-12  hover:bg-gray-50 hover:transition-colors hover:shadow-md"
+ 
     <>
-        <Link href={`/events/${event.id}`} >
-          <Card className="border-none space-y-1 flex items-center justify-between rounded-b-lg border-b bg-gradient-to-br from-green-50 to-emerald-300 border-gray-200 p-8 mx-12 my-2 hover:bg-gray-50 hover:transition-colors hover:shadow-md">
-            <CardTitle className="px-2">
-              <h2 className="font-medium text-lg">{event.title}</h2>
-            </CardTitle>
-            <CardContent className="px-2 flex items-center text-sm text-gray-700 text-muted-foreground">
-              <Calendar className="h-3.5 w-3.5 mr-1" />
-              <span>{date}</span>
-              <span className="mx-2">•</span>
-              <MapPin className="h-3.5 w-3.5 mr-1" />
-              <span>{event.venue}</span>
-            </CardContent>
-          </Card>
-          {/* <ChevronRight className="h-5 w-5 text-muted-foreground" /> */}
-        </Link>
+      <Link href={`/events/${event.id}`}>
+        <Card className="shadow-xl group border-gray-300 rounded-lg p-8 mx-12 my-2 hover:border-green-300   transform transition-all duration-300 hover:scale-[1.02]">
+          <CardContent className="relative space-y-4">
+            <div className="text-2xl font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-300">
+              <h3>{event.title}</h3>
+            </div>
+
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors">
+                  <Calendar className="h-4 w-4 text-green-600" />
+                </div>
+                <span className="text-xl font-medium">{date}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-1.5 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
+                <MapPin className="h-4 w-4 text-purple-600" />
+              </div>
+              <span className="text-xl font-medium">{event.venue}</span>
+            </div>
+
+            <div className="flex justify-end">
+              <div className="p-2 bg-gray-100 rounded-full group-hover:bg-green-500 group-hover:text-white transition-all duration-300 transform group-hover:scale-110">
+                <ChevronRight className="h-4 w-4" />
+              </div>
+            </div>
+
+          </CardContent>
+        </Card>
+      </Link>
     </>
   );
 };
