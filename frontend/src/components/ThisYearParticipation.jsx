@@ -13,7 +13,7 @@ import {
   CalendarIcon,
   TrendingUp,
 } from "lucide-react";
-import { fetchAllEvents } from "@/lib/api/fetchEvents";
+import { fetchEvents } from "@/lib/api/fetchEvents";
 
 const ThisYearParticipation = () => {
   const [thisCounts, setThisCount] = useState(0);
@@ -28,7 +28,7 @@ const ThisYearParticipation = () => {
 
   // イベントを取得
   useEffect(() => {
-    fetchAllEvents().then(setEvents);
+    fetchEvents().then(setEvents);
   }, []);
 
   // イベントが取得できたらカウント
