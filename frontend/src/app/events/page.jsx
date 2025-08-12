@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@headlessui/react";
 import { fetchAllEvents } from "@/lib/api/fetchEvents";
-import Link from "next/link";
 
 import EventListItem from "@/components/EventListItem";
 import SearchBar from "../../components/SearchBar";
@@ -17,15 +15,36 @@ export default function EventsPage() {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      const skip = (page - 1) * PAGE_SIZE;
-      const res = await fetchAllEvents(skip, PAGE_SIZE);
-      setEvents(res.data);
-      setTotal(res.total);
-    };
-    fetchEvent();
-  }, [page]);
+useEffect(() => {
+  const fetchEvent = async () => {
+    const skip = (page - 1) * PAGE_SIZE;
+    const res = await fetchAllEvents(skip, PAGE_SIZE);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 時間をゼロクリア（0:00〜の比較にする）
+
+    // 未来・当日イベント
+    const futureEvents = res.data.filter(
+      (e) => new Date(e.event_date) >= today
+    ).sort((a, b) => {
+      // 開催日が早いほうが上
+      return new Date(a.event_date) - new Date(b.event_date);
+    });
+
+    // 過去イベント
+    const pastEvents = res.data.filter(
+      (e) => new Date(e.event_date) < today
+    ).sort((a, b) => {
+      // 新しい順（直近が最初）
+      return new Date(b.event_date) - new Date(a.event_date);
+    });
+
+    // 結合してセット
+    setEvents([...futureEvents, ...pastEvents]);
+    setTotal(res.total); // 適宜変更（ページャ仕様による）
+  };
+  fetchEvent();
+}, [page]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -63,7 +82,6 @@ export default function EventsPage() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </>

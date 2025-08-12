@@ -13,7 +13,7 @@ import {
   BarChart3,
   TrendingUp,
 } from "lucide-react";
-import { fetchAllEvents } from "@/lib/api/fetchEvents";
+import { fetchEvents } from "@/lib/api/fetchEvents";
 import { fetchAllExpenses } from "@/lib/api/fetchExpense";
 
 const ThisYearExpenses = () => {
@@ -24,7 +24,7 @@ const ThisYearExpenses = () => {
 
   // イベントを取得
   useEffect(() => {
-    fetchAllEvents().then(setEvents);
+    fetchEvents().then(setEvents);
   }, []);
 
   useEffect(() => {
