@@ -5,6 +5,7 @@ import EventModalController from "../../../components/EventEditModal/EventModalC
 import ExpenseArea from "../../../components/ExpenseArea";
 import DetailEventArea from "../../../components/DetailEventArea";
 import DetailEventActor from "../../../components/DetailEventActor";
+import DeleteEvent from "../../../components/DeleteEvent";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -46,7 +47,9 @@ const EventDetailPage = async ({ params }) => {
                 <EventModalController
                   initialData={event}
                 />
+                <DeleteEvent id={id} />
               </div>
+
             </div>
           </div>
         </div>
