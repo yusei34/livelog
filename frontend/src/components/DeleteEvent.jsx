@@ -33,24 +33,25 @@ const DeleteEvent = ({ id }) => {
       {/* 確認モーダル */}
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="bg-white pt-4 grid-cols-2 rounded-lg shadow-lg w-100 h-40">
-            <div className="col-span-2 m-4 text-gray-800 text-center font-semibold">
+          <div className="bg-white border border-gray-400 grid grid-rows-2 rounded-lg shadow-lg w-100 h-40">
+            <div className="w-full py-4 row-span-1 text-gray-800 text-center font-semibold">
               このイベントを削除してもよろしいですか？
             </div>
 
+            <div className="divide row-span-2  flex justify-center items-stretch rounded-b-lg">
               <Button
-                className=" col-span-1 w-40 px-4 text-blue-500 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                className="border border-gray-400 w-full h-full px-4 text-blue-500 py-2 hover:bg-gray-300"
                 onClick={() => setShowConfirm(false)}
               >
                 キャンセル
               </Button>
               <Button
-                className="col-span-1 w-40 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                className="w-full h-full border border-gray-400 px-4 py-2 text-red-500 hover:bg-gray-300 "
                 onClick={handleDelete}
               >
                 削除
               </Button>
-      
+            </div>
           </div>
         </div>
       )}
